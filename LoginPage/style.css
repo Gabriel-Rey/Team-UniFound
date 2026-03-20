@@ -1,0 +1,380 @@
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centers horizontally */
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.main-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #1f3c4d;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+body {
+  background: linear-gradient(270deg, #f6e7e1, #dff5c7, #c7e9f5, #f6e7e1);
+  background-size: 600% 600%;
+  animation: gradientMove 12s ease infinite;
+
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+/* Animation */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+.login-container {
+  max-width: 1100px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 2rem;
+  box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+/* ============================================
+   TWO-COLUMN GRID
+   ============================================ */
+.login-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* LEFT COLUMN — LOGIN FORM */
+.form-section {
+  flex: 1.4;
+  background: white;
+  padding: 2.5rem 2rem 2rem 2rem;
+}
+
+/* RIGHT COLUMN — HELP & CONTACT */
+.info-section {
+  flex: 1;
+  background: linear-gradient(135deg, #f8fafd 0%, #ffffff 100%);
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 2.5rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ============================================
+   TYPOGRAPHY & HEADINGS
+   ============================================ */
+.login-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #1E3C4F, #2A5F7A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.4rem;
+}
+
+.login-sub {
+  color: #5a6e7c;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  border-left: 3px solid #e2b13b;
+  padding-left: 0.75rem;
+}
+
+/* ============================================
+   FORM INPUTS
+   ============================================ */
+.input-group {
+  margin-bottom: 1.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #2c4b5f;
+  margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f2f5f9;
+  border-radius: 1.2rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s;
+}
+
+.input-wrapper i {
+  color: #7f8e9b;
+  font-size: 1.1rem;
+  margin-right: 0.75rem;
+}
+
+.input-wrapper input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.6rem 0;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  color: #1a2c3a;
+}
+
+.input-wrapper input::placeholder {
+  color: #b9c3cc;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+
+.input-wrapper:focus-within {
+  border-color: #e2b13b;
+  box-shadow: 0 0 0 3px rgba(226, 177, 59, 0.2);
+  background: #ffffff;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.btn {
+  flex: 1;
+  padding: 0.85rem 0;
+  border-radius: 2.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  border: none;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-signin {
+  background: #1E3C4F;
+  color: white;
+  box-shadow: 0 6px 12px -8px rgba(30, 60, 79, 0.3);
+}
+
+.btn-signin:hover {
+  background: #0f2e3f;
+  transform: translateY(-2px);
+}
+
+.btn-signup {
+  background: transparent;
+  color: #1E3C4F;
+  border: 1.5px solid #cbdbe0;
+}
+
+.btn-signup:hover {
+  background: #f0f4fa;
+  border-color: #1E3C4F;
+}
+
+.forgot-link {
+  text-align: right;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.forgot-link a {
+  font-size: 0.8rem;
+  color: #7c8b9c;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.forgot-link a:hover {
+  color: #e2b13b;
+  text-decoration: underline;
+}
+
+/* ============================================
+   HELP SECTION STYLES
+   ============================================ */
+.help-heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f3e4f;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.2px;
+}
+
+.help-links {
+  list-style: none;
+  margin-bottom: 2.5rem;
+}
+
+.help-links li {
+  margin-bottom: 1rem;
+}
+
+.help-links a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #2c5a70;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+
+.help-links a i {
+  width: 1.6rem;
+  font-size: 1rem;
+  color: #e2b13b;
+}
+
+.help-links a:hover {
+  color: #e2b13b;
+  transform: translateX(4px);
+}
+
+/* ============================================
+   CONTACT & COPYRIGHT
+   ============================================ */
+.contact-details {
+  margin-top: 1rem;
+  background: #eef3f8;
+  border-radius: 1.5rem;
+  padding: 1rem 1.2rem;
+}
+
+.contact-details p {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #1e3c4f;
+  margin-bottom: 0.7rem;
+}
+
+.contact-details p i {
+  width: 1.4rem;
+  font-size: 1rem;
+  color: #e2b13b;
+}
+
+.contact-details a {
+  text-decoration: none;
+  color: #1e3c4f;
+  transition: color 0.2s;
+}
+
+.contact-details a:hover {
+  color: #e2b13b;
+}
+
+.copyright {
+  border-top: 1px solid #e2edf2;
+  margin-top: 1.2rem;
+  padding-top: 1.5rem;
+  font-size: 0.7rem;
+  color: #6f8a9b;
+  text-align: center;
+}
+
+.copyright p {
+  margin-bottom: 0.3rem;
+}
+
+/* ============================================
+   TOAST MESSAGES & DEMO HINT
+   ============================================ */
+.toast-msg {
+  background: #2c5a70;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 3rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.toast-msg.show {
+  opacity: 1;
+}
+
+.demo-hint {
+  font-size: 0.7rem;
+  text-align: center;
+  margin-top: 1rem;
+  color: #8ea0ad;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 780px) {
+  .login-grid {
+    flex-direction: column;
+  }
+  
+  .info-section {
+    border-left: none;
+    border-top: 1px solid #eef2f6;
+  }
+  
+  .form-section {
+    padding: 2rem 1.5rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
