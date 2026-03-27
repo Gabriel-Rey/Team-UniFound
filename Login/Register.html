@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>UniFound - Create Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(270deg, #f6e7e1, #dff5c7, #c7e9f5, #f6e7e1);
+      background-size: 600% 600%;
+      animation: gradientMove 12s ease infinite;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    /* ── BRAND HEADER ── */
+    .main-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 36px;
+    }
+
+    .brand-icon {
+      width: 68px; height: 68px;
+      background: linear-gradient(135deg, #1E3C4F, #2A5F7A);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(30,60,79,0.3);
+      flex-shrink: 0;
+    }
+    .brand-icon i { color: #e2b13b; font-size: 1.8rem; }
+
+    .brand-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
+    .brand-name {
+      font-size: 3.2rem; font-weight: 800; letter-spacing: -0.05em;
+      background: linear-gradient(135deg, #1E3C4F 30%, #2A7F9A);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .brand-tagline {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: #7a9aaa; margin-top: 5px;
+    }
+
+    /* ── CARD ── */
+    .reg-container {
+      max-width: 780px;
+      width: 100%;
+      background: #fff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    /* ── CARD HEADER BANNER ── */
+    .reg-header {
+      background: linear-gradient(135deg, #1E3C4F, #2A5F7A);
+      padding: 2rem 2.5rem 1.6rem;
+    }
+    .reg-header-title {
+      font-size: 1.8rem; font-weight: 700; color: #fff; letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+    }
+    .reg-header-sub {
+      font-size: 0.85rem; color: rgba(255,255,255,0.65);
+      border-left: 3px solid #e2b13b; padding-left: 0.75rem;
+    }
+
+    /* ── FORM BODY ── */
+    .reg-body { padding: 2rem 2.5rem 2.5rem; }
+
+    /* two-column row */
+    .form-row {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .form-row .input-group { flex: 1; min-width: 200px; }
+
+    .input-group {
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group label {
+      font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      color: #2c4b5f; margin-bottom: 0.45rem;
+    }
+
+    .input-wrapper {
+      display: flex; align-items: center;
+      background: #f2f5f9;
+      border-radius: 1.2rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+    .input-wrapper i { color: #7f8e9b; font-size: 1rem; margin-right: 0.75rem; }
+    .input-wrapper input, .input-wrapper select {
+      border: none; background: transparent; width: 100%;
+      font-size: 0.95rem; font-weight: 500; padding: 0.6rem 0;
+      outline: none; font-family: 'Inter', sans-serif; color: #1a2c3a;
+    }
+    .input-wrapper select { cursor: pointer; }
+    .input-wrapper input::placeholder { color: #b9c3cc; font-weight: 400; font-size: 0.88rem; }
+    .input-wrapper:focus-within {
+      border-color: #e2b13b;
+      box-shadow: 0 0 0 3px rgba(226,177,59,0.2);
+      background: #fff;
+    }
+
+    /* password strength bar */
+    .strength-bar-wrap {
+      height: 4px; background: #e2e8f0; border-radius: 99px;
+      margin-top: 6px; overflow: hidden;
+    }
+    .strength-bar {
+      height: 100%; width: 0; border-radius: 99px;
+      transition: width 0.3s, background 0.3s;
+    }
+    .strength-label {
+      font-size: 0.7rem; color: #9aafba; margin-top: 3px; text-align: right;
+    }
+
+    /* section divider */
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #b0c4cf;
+      display: flex; align-items: center; gap: 0.6rem;
+      margin: 0.6rem 0 1.2rem;
+    }
+    .section-label::before, .section-label::after {
+      content: ''; flex: 1; height: 1px; background: #e8eff4;
+    }
+
+    /* terms checkbox */
+    .terms-row {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      margin-bottom: 1.6rem;
+    }
+    .terms-row input[type="checkbox"] {
+      margin-top: 3px; accent-color: #1E3C4F;
+      width: 16px; height: 16px; flex-shrink: 0; cursor: pointer;
+    }
+    .terms-row label {
+      font-size: 0.8rem; color: #5a6e7c; line-height: 1.5; cursor: pointer;
+    }
+    .terms-row a { color: #1E3C4F; font-weight: 600; text-decoration: none; }
+    .terms-row a:hover { color: #e2b13b; }
+
+    /* buttons */
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      flex: 1; padding: 0.9rem 0;
+      border-radius: 2.5rem; font-weight: 700;
+      font-size: 0.95rem; cursor: pointer;
+      transition: all 0.2s ease; text-align: center;
+      border: none; font-family: 'Inter', sans-serif;
+    }
+    .btn-register {
+      background: #1E3C4F; color: white;
+      box-shadow: 0 6px 12px -8px rgba(30,60,79,0.3);
+    }
+    .btn-register:hover { background: #0f2e3f; transform: translateY(-2px); }
+
+    .btn-back {
+      background: transparent; color: #1E3C4F;
+      border: 1.5px solid #cbdbe0;
+    }
+    .btn-back:hover { background: #f0f4fa; border-color: #1E3C4F; }
+
+    /* toast */
+    .toast-msg {
+      background: #2c5a70; color: white;
+      padding: 0.5rem 1rem; border-radius: 3rem;
+      font-size: 0.75rem; font-weight: 500;
+      text-align: center; margin-top: 1rem;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+    }
+    .toast-msg.show { opacity: 1; }
+
+    /* back link at bottom */
+    .back-to-login {
+      text-align: center; margin-top: 1.4rem;
+      font-size: 0.82rem; color: #7c8b9c;
+    }
+    .back-to-login a {
+      color: #1E3C4F; font-weight: 600; text-decoration: none; transition: color 0.2s;
+    }
+    .back-to-login a:hover { color: #e2b13b; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .reg-header, .reg-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .form-row { flex-direction: column; gap: 0; }
+      .btn-row { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- Brand Header -->
+  <div class="main-title">
+    <div class="brand-icon"><i class="fas fa-search-location"></i></div>
+    <div class="brand-text">
+      <span class="brand-name">UniFound</span>
+      <span class="brand-tagline">Lost &amp; Found Portal</span>
+    </div>
+  </div>
+
+  <!-- Registration Card -->
+  <div class="reg-container">
+
+    <!-- Card Banner -->
+    <div class="reg-header">
+      <div class="reg-header-title"><i class="fas fa-user-plus" style="margin-right:10px; color:#e2b13b;"></i>Create Account</div>
+      <div class="reg-header-sub">Join UniFound and start reporting lost &amp; found items on campus</div>
+    </div>
+
+    <!-- Form -->
+    <div class="reg-body">
+      <form id="registerForm" novalidate>
+
+        <div class="section-label">Personal Information</div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label><i class="fas fa-user" style="margin-right:5px;"></i> First Name</label>
+            <div class="input-wrapper">
+              <i class="fas fa-id-badge"></i>
+              <input type="text" id="firstName" placeholder="e.g. John" autocomplete="given-name">
+            </div>
+          </div>
+          <div class="input-group">
+            <label><i class="fas fa-user" style="margin-right:5px;"></i> Last Name</label>
+            <div class="input-wrapper">
+              <i class="fas fa-id-badge"></i>
+              <input type="text" id="lastName" placeholder="e.g. Doe" autocomplete="family-name">
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fas fa-envelope" style="margin-right:5px;"></i> University Email</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" placeholder="student@university.edu" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label><i class="fas fa-id-card" style="margin-right:5px;"></i> Student / Staff ID</label>
+            <div class="input-wrapper">
+              <i class="fas fa-hashtag"></i>
+              <input type="text" id="studentId" placeholder="e.g. 20210001">
+            </div>
+          </div>
+          <div class="input-group">
+            <label><i class="fas fa-building" style="margin-right:5px;"></i> Faculty / Department</label>
+            <div class="input-wrapper">
+              <i class="fas fa-university"></i>
+              <select id="faculty">
+                <option value="" disabled selected>Select your faculty</option>
+                <option>Faculty of Computing</option>
+                <option>Faculty of Engineering</option>
+                <option>Faculty of Business</option>
+                <option>Faculty of Science</option>
+                <option>Faculty of Arts</option>
+                <option>Faculty of Medicine</option>
+                <option>Administrative Staff</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-label">Account Credentials</div>
+
+        <div class="input-group">
+          <label><i class="fas fa-at" style="margin-right:5px;"></i> Username</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user-circle"></i>
+            <input type="text" id="regUsername" placeholder="Choose a unique username" autocomplete="username">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fas fa-lock" style="margin-right:5px;"></i> Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-key"></i>
+            <input type="password" id="regPassword" placeholder="Min. 8 characters" autocomplete="new-password">
+          </div>
+          <div class="strength-bar-wrap"><div class="strength-bar" id="strengthBar"></div></div>
+          <div class="strength-label" id="strengthLabel"></div>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fas fa-lock" style="margin-right:5px;"></i> Confirm Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-check-circle"></i>
+            <input type="password" id="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password">
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="terms-row">
+          <input type="checkbox" id="termsCheck">
+          <label for="termsCheck">
+            I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> of UniFound.
+          </label>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-row">
+          <button type="button" class="btn btn-back" id="backBtn"><i class="fas fa-arrow-left" style="margin-right:6px;"></i>Back to Login</button>
+          <button type="submit" class="btn btn-register"><i class="fas fa-user-plus" style="margin-right:6px;"></i>Create Account</button>
+        </div>
+
+        <div id="regFeedback" class="toast-msg"></div>
+
+      </form>
+
+      <div class="back-to-login">
+        Already have an account? <a href="unifound-login.html">Sign in here</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const form            = document.getElementById('registerForm');
+  const backBtn         = document.getElementById('backBtn');
+  const feedbackDiv     = document.getElementById('regFeedback');
+  const passwordInput   = document.getElementById('regPassword');
+  const confirmInput    = document.getElementById('confirmPassword');
+  const strengthBar     = document.getElementById('strengthBar');
+  const strengthLabel   = document.getElementById('strengthLabel');
+
+  // ── Toast ──
+  function showMessage(text, isError = false) {
+    feedbackDiv.innerText = text;
+    feedbackDiv.style.backgroundColor = isError ? '#bc5a3c' : '#2c7a50';
+    feedbackDiv.classList.add('show');
+    setTimeout(() => feedbackDiv.classList.remove('show'), 3200);
+  }
+
+  // ── Password strength ──
+  passwordInput.addEventListener('input', function () {
+    const val = this.value;
+    let score = 0;
+    if (val.length >= 8)              score++;
+    if (/[A-Z]/.test(val))            score++;
+    if (/[0-9]/.test(val))            score++;
+    if (/[^A-Za-z0-9]/.test(val))    score++;
+
+    const levels = [
+      { w: '0%',   bg: 'transparent', label: '' },
+      { w: '25%',  bg: '#e05252',     label: 'Weak' },
+      { w: '50%',  bg: '#e2b13b',     label: 'Fair' },
+      { w: '75%',  bg: '#4fb3d4',     label: 'Good' },
+      { w: '100%', bg: '#4caf7d',     label: 'Strong' },
+    ];
+    const lvl = levels[score] || levels[0];
+    strengthBar.style.width      = lvl.w;
+    strengthBar.style.background = lvl.bg;
+    strengthLabel.textContent    = lvl.label;
+    strengthLabel.style.color    = lvl.bg;
+  });
+
+  // ── Back button ──
+  backBtn.addEventListener('click', () => {
+    window.location.href = 'unifound-login.html';
+  });
+
+  // ── Form submit ──
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    const studentId = document.getElementById('studentId').value.trim();
+    const faculty   = document.getElementById('faculty').value;
+    const username  = document.getElementById('regUsername').value.trim();
+    const password  = passwordInput.value;
+    const confirm   = confirmInput.value;
+    const terms     = document.getElementById('termsCheck').checked;
+
+    if (!firstName) { showMessage('❗ Please enter your first name.', true); return; }
+    if (!lastName)  { showMessage('❗ Please enter your last name.', true);  return; }
+    if (!email || !email.includes('@')) { showMessage('📧 Please enter a valid email address.', true); return; }
+    if (!studentId) { showMessage('🪪 Please enter your Student/Staff ID.', true); return; }
+    if (!faculty)   { showMessage('🏛️ Please select your faculty.', true); return; }
+    if (!username)  { showMessage('👤 Please choose a username.', true); return; }
+    if (password.length < 8) { showMessage('🔐 Password must be at least 8 characters.', true); return; }
+    if (password !== confirm) { showMessage('🔑 Passwords do not match.', true); return; }
+    if (!terms) { showMessage('📋 Please accept the Terms & Conditions.', true); return; }
+
+    // Success
+    showMessage(`🎉 Welcome, ${firstName}! Your account has been created successfully.`);
+    setTimeout(() => { window.location.href = 'unifound-login.html'; }, 2500);
+  });
+
+});
+</script>
+</body>
+</html>
