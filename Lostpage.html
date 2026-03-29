@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lost Page – I Found</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream:   #f5f0e8;
+    --green:   #4a7c59;
+    --red:     #c0392b;
+    --dark:    #1a1a1a;
+    --muted:   #7a7a7a;
+    --card-bg: #ffffff;
+    --border:  #e0dbd0;
+    --shadow:  0 4px 24px rgba(0,0,0,0.08);
+    --radius:  14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: var(--green);
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 1.2rem;
+  }
+
+  .logo-text {
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    letter-spacing: .02em;
+  }
+
+  .logo-text span { color: var(--green); }
+
+  .logo-sub {
+    color: #888;
+    font-size: .62rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    display: block;
+    line-height: 1;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: .25rem;
+  }
+
+  nav ul a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: .85rem;
+    padding: .4rem .8rem;
+    border-radius: 6px;
+    transition: all .2s;
+    font-weight: 400;
+  }
+
+  nav ul a:hover { color: #fff; background: #222; }
+  nav ul a.active { color: #fff; background: var(--red); font-weight: 500; }
+
+  .btn-signout {
+    background: transparent;
+    border: 1px solid #444;
+    color: #bbb;
+    padding: .4rem 1.1rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-signout:hover { border-color: #fff; color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #c8e6c0 0%, #fff9c4 40%, #ffccbc 100%);
+    padding: 3.5rem 2rem 2.5rem;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+    color: var(--red);
+  }
+
+  .hero h1 span { color: var(--green); }
+
+  /* ── SEARCH ROW ── */
+  .search-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.6rem;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    position: relative;
+    width: min(420px, 90vw);
+  }
+
+  .search-wrap input {
+    width: 100%;
+    padding: .8rem 1rem .8rem 2.8rem;
+    border: 2px solid var(--border);
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .92rem;
+    background: #fff;
+    color: var(--dark);
+    outline: none;
+    transition: border-color .2s;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+  .search-wrap input:focus { border-color: var(--green); }
+
+  .search-wrap .ico {
+    position: absolute;
+    left: 1rem; top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  .btn-report {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: .8rem 1.6rem;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 14px rgba(192,57,43,.3);
+  }
+  .btn-report:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(192,57,43,.4); }
+  .btn-report:active { transform: translateY(0); }
+
+  /* ── CARDS GRID ── */
+  main {
+    flex: 1;
+    padding: 2.5rem 2rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s, box-shadow .2s;
+    animation: fadeUp .4s ease both;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,.12); }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(16px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  .card:nth-child(1) { animation-delay:.05s; }
+  .card:nth-child(2) { animation-delay:.12s; }
+  .card:nth-child(3) { animation-delay:.19s; }
+  .card:nth-child(4) { animation-delay:.26s; }
+
+  /* card header */
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    display: grid; place-items: center;
+    font-weight: 700;
+    font-size: .85rem;
+    flex-shrink: 0;
+  }
+
+  .card-meta { line-height: 1.2; }
+  .card-meta .name { font-weight: 600; font-size: .85rem; }
+  .card-meta .date { font-size: .72rem; color: var(--muted); }
+
+  /* carousel */
+  .carousel {
+    position: relative;
+    background: #e8e8e8;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .carousel-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%; height: 100%;
+    background: #ddd;
+  }
+
+  .placeholder-img svg { opacity: .4; }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,.85);
+    border: none;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    cursor: pointer;
+    font-size: .9rem;
+    color: var(--dark);
+    transition: background .15s;
+    z-index: 2;
+  }
+  .carousel-btn:hover { background: #fff; }
+  .carousel-btn.prev { left: .5rem; }
+  .carousel-btn.next { right: .5rem; }
+
+  /* card body */
+  .card-body {
+    padding: .85rem 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+  }
+
+  .card-title { font-weight: 700; font-size: .95rem; }
+  .card-location { font-size: .78rem; color: var(--muted); display: flex; align-items: center; gap: .25rem; }
+  .card-desc { font-size: .8rem; color: #555; line-height: 1.5; margin-top: .2rem; }
+
+  .card-footer {
+    padding: .75rem 1rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-contact {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: .4rem 1.1rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s, transform .15s;
+  }
+  .btn-contact:hover { opacity: .88; transform: scale(1.03); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #f0ebe0;
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem 1.5rem;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 2rem;
+  }
+
+  .footer-col h4 {
+    font-weight: 700;
+    font-size: .88rem;
+    margin-bottom: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--dark);
+  }
+
+  .footer-col a, .footer-col p {
+    display: block;
+    font-size: .82rem;
+    color: var(--muted);
+    text-decoration: none;
+    line-height: 2;
+    transition: color .15s;
+  }
+  .footer-col a:hover { color: var(--dark); }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 1.5rem auto 0;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .footer-bottom p { font-size: .78rem; color: var(--muted); }
+
+  .social-icons { display: flex; gap: .6rem; }
+  .social-icons a {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--dark);
+    color: #fff;
+    display: grid; place-items: center;
+    text-decoration: none;
+    font-size: .75rem;
+    transition: background .15s;
+  }
+  .social-icons a:hover { background: var(--green); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-icon">🎁</div>
+    <div>
+      <span class="logo-text">I <span>Found</span></span>
+      <span class="logo-sub">finder · seeker · reunite</span>
+    </div>
+  </a>
+
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#" class="active">Lost</a></li>
+    <li><a href="#">Report Lost</a></li>
+    <li><a href="#">Found</a></li>
+    <li><a href="#">Report Found</a></li>
+    <li><a href="#">Profile</a></li>
+  </ul>
+
+  <button class="btn-signout">Sign Out</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Lost <span>Items</span></h1>
+
+  <div class="search-row">
+    <div class="search-wrap">
+      <span class="ico">🔍</span>
+      <input type="text" placeholder="Item Name" id="searchInput" oninput="filterCards()"/>
+    </div>
+    <button class="btn-report">Report &nbsp;🎒</button>
+  </div>
+</section>
+
+<!-- CARDS -->
+<main>
+  <div class="grid" id="cardGrid">
+
+    <!-- Card 1 -->
+    <article class="card" data-title="Leather Wallet">
+      <div class="card-header">
+        <div class="avatar">A</div>
+        <div class="card-meta">
+          <div class="name">Item Name</div>
+          <div class="date">March 24, 2024</div>
+        </div>
+      </div>
+      <div class="carousel">
+        <div class="placeholder-img">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <rect x="8" y="28" width="22" height="22" rx="2" fill="#aaa"/>
+            <circle cx="44" cy="39" r="11" fill="#aaa"/>
+            <polygon points="28,8 50,28 6,28" fill="#aaa"/>
+          </svg>
+        </div>
+        <button class="carousel-btn prev">&#8249;</button>
+        <button class="carousel-btn next">&#8250;</button>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Leather Wallet</div>
+        <div class="card-location">📍 SM City Cebu, North Wing</div>
+        <p class="card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn-contact">Contact</button>
+      </div>
+    </article>
+
+    <!-- Card 2 -->
+    <article class="card" data-title="Blue Umbrella">
+      <div class="card-header">
+        <div class="avatar" style="background:#c0392b;">B</div>
+        <div class="card-meta">
+          <div class="name">Item Name</div>
+          <div class="date">March 22, 2024</div>
+        </div>
+      </div>
+      <div class="carousel">
+        <div class="placeholder-img">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <rect x="8" y="28" width="22" height="22" rx="2" fill="#aaa"/>
+            <circle cx="44" cy="39" r="11" fill="#aaa"/>
+            <polygon points="28,8 50,28 6,28" fill="#aaa"/>
+          </svg>
+        </div>
+        <button class="carousel-btn prev">&#8249;</button>
+        <button class="carousel-btn next">&#8250;</button>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Blue Umbrella</div>
+        <div class="card-location">📍 Ayala Center Cebu</div>
+        <p class="card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn-contact">Contact</button>
+      </div>
+    </article>
+
+    <!-- Card 3 -->
+    <article class="card" data-title="Silver Watch">
+      <div class="card-header">
+        <div class="avatar" style="background:#8e44ad;">C</div>
+        <div class="card-meta">
+          <div class="name">Item Name</div>
+          <div class="date">March 20, 2024</div>
+        </div>
+      </div>
+      <div class="carousel">
+        <div class="placeholder-img">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <rect x="8" y="28" width="22" height="22" rx="2" fill="#aaa"/>
+            <circle cx="44" cy="39" r="11" fill="#aaa"/>
+            <polygon points="28,8 50,28 6,28" fill="#aaa"/>
+          </svg>
+        </div>
+        <button class="carousel-btn prev">&#8249;</button>
+        <button class="carousel-btn next">&#8250;</button>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Silver Watch</div>
+        <div class="card-location">📍 IT Park, Cebu City</div>
+        <p class="card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn-contact">Contact</button>
+      </div>
+    </article>
+
+    <!-- Card 4 -->
+    <article class="card" data-title="Brown Sling Bag">
+      <div class="card-header">
+        <div class="avatar" style="background:#d35400;">D</div>
+        <div class="card-meta">
+          <div class="name">Item Name</div>
+          <div class="date">March 18, 2024</div>
+        </div>
+      </div>
+      <div class="carousel">
+        <div class="placeholder-img">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <rect x="8" y="28" width="22" height="22" rx="2" fill="#aaa"/>
+            <circle cx="44" cy="39" r="11" fill="#aaa"/>
+            <polygon points="28,8 50,28 6,28" fill="#aaa"/>
+          </svg>
+        </div>
+        <button class="carousel-btn prev">&#8249;</button>
+        <button class="carousel-btn next">&#8250;</button>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Brown Sling Bag</div>
+        <div class="card-location">📍 Colon Street, Cebu City</div>
+        <p class="card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn-contact">Contact</button>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Site</h4>
+      <a href="#">Lost</a>
+      <a href="#">Report Lost</a>
+      <a href="#">Found</a>
+      <a href="#">Report Found</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="#">Customer Support</a>
+      <a href="#">Terms & Conditions</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Links</h4>
+      <a href="#">LinkedIn</a>
+      <a href="#">Facebook</a>
+      <a href="#">YouTube</a>
+      <a href="#">About Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>Tel: +94 7165220690</p>
+      <p>Email: talk@projects@wenrix.com</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© Copyright 2024 Lost and Found &nbsp;·&nbsp; All Right Reserved</p>
+    <div class="social-icons">
+      <a href="#" title="Twitter">𝕏</a>
+      <a href="#" title="Facebook">f</a>
+      <a href="#" title="Instagram">ig</a>
+      <a href="#" title="GitHub">gh</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Search / filter
+  function filterCards() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+      const title = card.dataset.title.toLowerCase();
+      const desc  = card.querySelector('.card-desc').textContent.toLowerCase();
+      card.style.display = (title.includes(q) || desc.includes(q)) ? '' : 'none';
+    });
+  }
+
+  // Carousel stub (cycles placeholder message if you add real images later)
+  document.querySelectorAll('.carousel').forEach(c => {
+    let idx = 0;
+    const imgs = ['🖼️', '📷', '🗂️'];
+    c.querySelector('.prev').addEventListener('click', () => {
+      idx = (idx - 1 + imgs.length) % imgs.length;
+    });
+    c.querySelector('.next').addEventListener('click', () => {
+      idx = (idx + 1) % imgs.length;
+    });
+  });
+
+  // Contact button
+  document.querySelectorAll('.btn-contact').forEach(btn => {
+    btn.addEventListener('click', () => {
+      alert('Contact form coming soon! 📬');
+    });
+  });
+
+  // Report button
+  document.querySelector('.btn-report').addEventListener('click', () => {
+    alert('Report Lost Item form coming soon! 📋');
+  });
+</script>
+</body>
+</html>
