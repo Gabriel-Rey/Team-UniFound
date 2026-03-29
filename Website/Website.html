@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>UniFound - Lost and Found Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        .auth-container { background: linear-gradient(270deg, #f6e7e1, #dff5c7, #c7e9f5, #f6e7e1); background-size: 600% 600%; animation: gradientMove 12s ease infinite; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 2rem 1.5rem; display: flex; align-items: center; justify-content: center; }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .page-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+        .main-title { display: flex; align-items: center; justify-content: center; gap: 1.2rem; margin-bottom: 2.5rem; }
+        .brand-icon { width: 90px; height: 90px; background: linear-gradient(135deg, #1E3C4F, #2A5F7A); border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 32px rgba(30,60,79,0.3); flex-shrink: 0; }
+        .brand-icon i { color: #e2b13b; font-size: 2.4rem; }
+        .brand-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
+        .brand-name { font-size: 4.2rem; font-weight: 800; letter-spacing: -0.05em; background: linear-gradient(135deg, #1E3C4F 30%, #2A7F9A); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .brand-tagline { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #7a9aaa; margin-top: 6px; }
+        .view { display: none; width: 100%; max-width: 480px; }
+        .view.active { display: block; }
+        .card { width: 100%; background: #fff; border-radius: 2rem; box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
+        .form-section { padding: 2.5rem 2.2rem 2rem; }
+        .login-title { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(135deg, #1E3C4F, #2A5F7A); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.4rem; text-align: center; }
+        .login-sub { color: #5a6e7c; font-size: 0.88rem; margin-bottom: 2rem; border-left: 3px solid #e2b13b; padding-left: 0.75rem; }
+        .input-group { margin-bottom: 1.4rem; display: flex; flex-direction: column; }
+        .input-group label { font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #2c4b5f; margin-bottom: 0.45rem; }
+        .input-wrapper { display: flex; align-items: center; background: #f2f5f9; border-radius: 1.2rem; padding: 0.5rem 1rem; border: 1px solid #e2e8f0; transition: all 0.2s; }
+        .input-wrapper i { color: #7f8e9b; font-size: 1rem; margin-right: 0.75rem; }
+        .input-wrapper input, .input-wrapper select { border: none; background: transparent; width: 100%; font-size: 0.95rem; font-weight: 500; padding: 0.6rem 0; outline: none; font-family: 'Inter', sans-serif; color: #1a2c3a; }
+        .input-wrapper select { cursor: pointer; }
+        .input-wrapper input::placeholder { color: #b9c3cc; font-weight: 400; font-size: 0.88rem; }
+        .input-wrapper:focus-within { border-color: #e2b13b; box-shadow: 0 0 0 3px rgba(226,177,59,0.2); background: #fff; }
+        .button-group, .btn-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem; margin-bottom: 1.2rem; }
+        .btn { flex: 1; padding: 0.88rem 0; border-radius: 2.5rem; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; text-align: center; border: none; font-family: 'Inter', sans-serif; }
+        .btn-signin, .btn-register { background: #1E3C4F; color: white; }
+        .btn-signin:hover, .btn-register:hover { background: #0f2e3f; transform: translateY(-2px); }
+        .btn-signup, .btn-back { background: transparent; color: #1E3C4F; border: 1.5px solid #cbdbe0; }
+        .btn-signup:hover, .btn-back:hover { background: #f0f4fa; border-color: #1E3C4F; }
+        .forgot-link { text-align: right; margin: 0.5rem 0 1rem; }
+        .forgot-link a { font-size: 0.8rem; color: #7c8b9c; text-decoration: none; font-weight: 500; }
+        .forgot-link a:hover { color: #e2b13b; text-decoration: underline; }
+        .contact-strip { background: #eef3f8; border-radius: 1.2rem; padding: 0.9rem 1.2rem; margin: 0 2.2rem; display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+        .contact-strip a { font-size: 0.82rem; font-weight: 500; color: #1e3c4f; text-decoration: none; display: flex; align-items: center; gap: 0.45rem; }
+        .contact-strip a:hover { color: #e2b13b; }
+        .contact-strip i { color: #e2b13b; font-size: 0.85rem; }
+        .help-row { display: flex; justify-content: center; gap: 1.5rem; padding: 1rem 2.2rem 0; flex-wrap: wrap; }
+        .help-row a { text-decoration: none; font-weight: 500; color: #5a7a8a; display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; transition: 0.2s; }
+        .help-row a i { color: #e2b13b; }
+        .help-row a:hover { color: #e2b13b; }
+        .copyright { text-align: center; margin-top: 1.2rem; padding: 1rem 2.2rem 2rem; font-size: 0.68rem; color: #9aafba; }
+        .toast-msg { background: #2c5a70; color: white; padding: 0.5rem 1rem; border-radius: 3rem; font-size: 0.75rem; font-weight: 500; text-align: center; margin-top: 0.75rem; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+        .toast-msg.show { opacity: 1; }
+        .demo-hint { font-size: 0.7rem; text-align: center; margin-top: 1rem; color: #8ea0ad; }
+        .reg-view.view { max-width: 780px; }
+        .reg-header { background: linear-gradient(135deg, #1E3C4F, #2A5F7A); padding: 2rem 2.5rem 1.6rem; }
+        .reg-header-title { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+        .reg-header-sub { font-size: 0.85rem; color: rgba(255,255,255,0.65); border-left: 3px solid #e2b13b; padding-left: 0.75rem; }
+        .reg-body { padding: 2rem 2.5rem 2.5rem; }
+        .form-row { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+        .form-row .input-group { flex: 1; min-width: 200px; }
+        .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #b0c4cf; display: flex; align-items: center; gap: 0.6rem; margin: 0.4rem 0 1.2rem; }
+        .section-label::before, .section-label::after { content: ''; flex: 1; height: 1px; background: #e8eff4; }
+        .strength-bar-wrap { height: 4px; background: #e2e8f0; border-radius: 99px; margin-top: 6px; overflow: hidden; }
+        .strength-bar { height: 100%; width: 0; border-radius: 99px; transition: width 0.3s, background 0.3s; }
+        .strength-label { font-size: 0.7rem; color: #9aafba; margin-top: 3px; text-align: right; }
+        .terms-row { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.6rem; }
+        .terms-row input[type="checkbox"] { margin-top: 3px; accent-color: #1E3C4F; width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+        .terms-row label { font-size: 0.8rem; color: #5a6e7c; line-height: 1.5; cursor: pointer; }
+        .terms-row a { color: #1E3C4F; font-weight: 600; text-decoration: none; }
+        .back-to-login { text-align: center; margin-top: 1.4rem; font-size: 0.82rem; color: #7c8b9c; }
+        .back-to-login a { color: #1E3C4F; font-weight: 600; text-decoration: none; }
+
+        :root { --red:#e74c3c; --green:#27ae60; --dark:#2c3e50; --light:#666; }
+
+        .home-container { font-family: 'Inter', sans-serif; background: linear-gradient(135deg,#fff5f5,#f0fff4); min-height:100vh; color:var(--dark); overflow-x:hidden; }
+        .navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 5%; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); position:fixed; width:100%; top:0; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.06); }
+        @keyframes slideDown { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+        .logo { display:flex; align-items:center; gap:0.5rem; font-weight:bold; font-size:1.5rem; color:var(--dark); cursor:pointer; }
+        .logo-icon { width:40px; height:40px; background:linear-gradient(135deg,#f39c12,#e74c3c); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; animation:bounce 2s infinite; }
+        @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+        .nav-links { display:flex; gap:1.5rem; list-style:none; }
+        .nav-links a { text-decoration:none; color:var(--dark); font-weight:500; transition:all 0.3s; position:relative; cursor:pointer; font-size:0.9rem; }
+        .nav-links a::after { content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px; background:var(--green); transition:width 0.3s; }
+        .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+        .nav-links a:hover { color:var(--green); }
+        .btn-signout { padding:0.5rem 1.5rem; border:2px solid var(--dark); background:transparent; border-radius:25px; cursor:pointer; font-weight:600; font-family:'Inter',sans-serif; transition:all 0.3s; }
+        .btn-signout:hover { background:#e74c3c; border-color:#e74c3c; color:white; }
+
+        .hero { display:flex; align-items:center; justify-content:space-between; padding:8rem 5% 4rem; min-height:80vh; gap:4rem; }
+        .hero-content { flex:1; max-width:600px; animation:fadeInLeft 1s ease-out; }
+        @keyframes fadeInLeft { from{opacity:0;transform:translateX(-50px)} to{opacity:1;transform:translateX(0)} }
+        .hero-title { font-size:4rem; line-height:1.1; margin-bottom:1.5rem; font-weight:800; }
+        .hero-title .highlight-red { color:var(--red); display:inline-block; animation:pulse 2s infinite; }
+        .hero-title .highlight-green { color:var(--green); display:inline-block; }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.02)} }
+        .hero-subtitle { font-size:1.1rem; color:var(--light); margin-bottom:2rem; line-height:1.6; }
+        .hero-actions { display:flex; flex-direction:column; gap:1rem; align-items:flex-start; }
+        .action-btn { display:flex; align-items:center; gap:1rem; padding:1rem 2rem; border:none; border-radius:12px; font-size:1.2rem; font-weight:700; cursor:pointer; transition:all 0.3s; min-width:200px; position:relative; overflow:hidden; font-family:'Inter',sans-serif; }
+        .action-btn::before { content:''; position:absolute; top:50%; left:50%; width:0; height:0; border-radius:50%; background:rgba(255,255,255,0.3); transform:translate(-50%,-50%); transition:width 0.6s,height 0.6s; }
+        .action-btn:hover::before { width:300px; height:300px; }
+        .btn-lost { background:linear-gradient(135deg,#e74c3c,#c0392b); color:white; box-shadow:0 4px 15px rgba(231,76,60,0.4); }
+        .btn-found { background:linear-gradient(135deg,#27ae60,#229954); color:white; box-shadow:0 4px 15px rgba(39,174,96,0.4); }
+        .action-btn:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 8px 25px rgba(0,0,0,0.2); }
+        .btn-icon { width:40px; height:40px; background:rgba(255,255,255,0.2); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+        .hero-images { flex:1; position:relative; height:400px; animation:fadeInRight 1s ease-out; }
+        @keyframes fadeInRight { from{opacity:0;transform:translateX(50px)} to{opacity:1;transform:translateX(0)} }
+        .image-stack { position:relative; width:100%; height:100%; }
+        .hero-img { position:absolute; border-radius:12px; box-shadow:0 8px 15px rgba(0,0,0,0.2); transition:all 0.3s; object-fit:cover; }
+        .hero-img:hover { transform:scale(1.05) rotate(0deg)!important; z-index:10; }
+        .img-1 { width:280px; height:200px; top:0; left:0; transform:rotate(-5deg); z-index:3; }
+        .img-2 { width:250px; height:180px; top:100px; left:150px; transform:rotate(5deg); z-index:2; }
+        .img-3 { width:260px; height:190px; top:200px; left:50px; transform:rotate(-3deg); z-index:1; }
+
+        .footer { background:rgba(255,255,255,0.8); padding:3rem 5%; margin-top:2rem; border-top:1px solid rgba(0,0,0,0.05); }
+        .footer-content { display:grid; grid-template-columns:repeat(4,1fr); gap:3rem; max-width:1200px; margin:0 auto; }
+        .footer-section h3 { font-size:1.1rem; margin-bottom:1rem; color:var(--dark); position:relative; display:inline-block; }
+        .footer-section h3::after { content:''; position:absolute; bottom:-5px; left:0; width:30px; height:2px; background:var(--green); }
+        .footer-section ul { list-style:none; }
+        .footer-section ul li { margin-bottom:0.5rem; }
+        .footer-section a { color:var(--light); text-decoration:none; transition:all 0.3s; display:inline-block; cursor:pointer; }
+        .footer-section a:hover { color:var(--green); transform:translateX(5px); }
+        .footer-logo { width:60px; height:60px; background:linear-gradient(135deg,#f39c12,#e74c3c); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:2rem; margin-bottom:1rem; animation:float 3s ease-in-out infinite; }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        .social-links { display:flex; gap:1rem; margin-top:1rem; }
+        .social-links a { width:35px; height:35px; border-radius:50%; background:var(--dark); color:white; display:flex; align-items:center; justify-content:center; transition:all 0.3s; }
+        .social-links a:hover { background:var(--green); transform:translateY(-3px); }
+        .footer-bottom { text-align:center; margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(0,0,0,0.05); color:var(--light); font-size:0.9rem; }
+
+        /* MODAL base */
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
+        .modal.active { display:flex; animation:fadeIn 0.3s ease; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        .modal-content { background:white; padding:2rem; border-radius:20px; width:90%; max-width:500px; position:relative; animation:slideUp 0.3s ease; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+        @keyframes slideUp { from{transform:translateY(50px);opacity:0} to{transform:translateY(0);opacity:1} }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; }
+        .modal-title { font-size:1.5rem; color:var(--dark); font-weight:700; }
+        .close-btn { background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--light); line-height:1; }
+        .close-btn:hover { color:var(--red); }
+        .form-group { margin-bottom:1rem; }
+        .form-group label { display:block; margin-bottom:0.5rem; color:var(--dark); font-weight:500; font-size:0.9rem; }
+        .form-group input,.form-group textarea,.form-group select { width:100%; padding:0.75rem; border:2px solid #e0e0e0; border-radius:8px; font-family:'Inter',sans-serif; transition:border-color 0.3s; font-size:0.9rem; }
+        .form-group input:focus,.form-group textarea:focus,.form-group select:focus { outline:none; border-color:var(--green); }
+        .submit-btn { width:100%; padding:1rem; background:linear-gradient(135deg,var(--green),#229954); color:white; border:none; border-radius:8px; font-size:1rem; font-weight:600; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; }
+        .submit-btn:hover { transform:translateY(-2px); box-shadow:0 5px 15px rgba(39,174,96,0.4); }
+
+        /* ── SIGN OUT MODAL ── */
+        .so-modal-inner { max-width:360px; text-align:center; padding:2.5rem 2rem 2rem; }
+        .so-emoji { font-size:3.2rem; display:block; margin-bottom:1rem; }
+        .so-modal-inner h3 { font-size:1.3rem; font-weight:700; color:var(--dark); margin-bottom:0.5rem; }
+        .so-modal-inner p { font-size:0.88rem; color:#888; margin-bottom:1.8rem; line-height:1.5; }
+        .so-user-badge { display:inline-flex; align-items:center; gap:0.4rem; background:#f0f4fa; border-radius:20px; padding:0.3rem 0.9rem; font-size:0.82rem; font-weight:600; color:#1E3C4F; margin-bottom:1.4rem; }
+        .so-btn-row { display:flex; gap:0.75rem; }
+        .so-stay { flex:1; padding:0.8rem; border:2px solid #e0e0e0; background:transparent; border-radius:10px; font-family:'Inter',sans-serif; font-size:0.9rem; font-weight:600; cursor:pointer; color:#555; transition:all 0.2s; }
+        .so-stay:hover { border-color:#aaa; background:#f5f5f5; color:#333; }
+        .so-leave { flex:1; padding:0.8rem; border:none; background:linear-gradient(135deg,#e74c3c,#c0392b); color:white; border-radius:10px; font-family:'Inter',sans-serif; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(231,76,60,0.3); display:flex; align-items:center; justify-content:center; gap:0.4rem; }
+        .so-leave:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(231,76,60,0.4); }
+        .so-leave:disabled { opacity:0.65; cursor:not-allowed; transform:none; }
+        .so-spinner-wrap { display:none; flex-direction:column; align-items:center; gap:0.6rem; margin-top:1.2rem; }
+        .so-spinner-wrap.on { display:flex; }
+        .so-spin { width:28px; height:28px; border:3px solid #f0f0f0; border-top-color:#e74c3c; border-radius:50%; animation:spin 0.65s linear infinite; }
+        @keyframes spin { to{transform:rotate(360deg)} }
+        .so-spin-txt { font-size:0.82rem; color:#999; }
+
+        /* TOAST */
+        .toast { position:fixed; bottom:30px; right:30px; background:var(--dark); color:white; padding:1rem 2rem; border-radius:8px; box-shadow:0 5px 20px rgba(0,0,0,0.3); display:none; align-items:center; gap:0.5rem; z-index:3000; }
+        .toast.show { display:flex; animation:slideInRight 0.3s ease; }
+        @keyframes slideInRight { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+        .toast.success { background:var(--green); }
+        .toast.error { background:var(--red); }
+
+        /* LOST PAGE */
+        .lost-page { font-family:'Inter',sans-serif; background:linear-gradient(135deg,#fff5f5,#f0fff4); min-height:100vh; }
+        .lost-hero { background:linear-gradient(135deg,#c8ead8,#fffde7 45%,#fce4ec); padding:7rem 5% 3rem; text-align:center; }
+        .lost-hero h1 { font-size:clamp(2.2rem,5vw,3.4rem); font-weight:800; letter-spacing:-0.03em; color:#c0392b; }
+        .lost-hero h1 span { color:#27ae60; }
+        .search-report-row { display:flex; justify-content:center; align-items:center; gap:1rem; margin-top:1.8rem; flex-wrap:wrap; }
+        .search-box { display:flex; align-items:center; gap:0.6rem; background:#fff; border:2px solid #e0e0e0; border-radius:40px; padding:0.65rem 1.2rem; width:min(400px,90vw); box-shadow:0 2px 12px rgba(0,0,0,0.06); transition:border-color 0.2s; }
+        .search-box:focus-within { border-color:#27ae60; }
+        .search-box i { color:#aaa; }
+        .search-box input { border:none; outline:none; font-family:'Inter',sans-serif; font-size:0.92rem; width:100%; color:#2c3e50; }
+        .search-box input::placeholder { color:#bbb; }
+        .btn-report-lost { background:linear-gradient(135deg,#e74c3c,#c0392b); color:#fff; border:none; padding:0.75rem 1.6rem; border-radius:40px; font-family:'Inter',sans-serif; font-weight:700; font-size:0.95rem; cursor:pointer; display:flex; align-items:center; gap:0.5rem; box-shadow:0 4px 14px rgba(231,76,60,0.35); transition:transform 0.15s,box-shadow 0.15s; }
+        .btn-report-lost:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(231,76,60,0.45); }
+        .filter-row { display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap; margin-top:1.2rem; }
+        .chip { padding:0.35rem 0.9rem; border-radius:20px; font-size:0.8rem; font-weight:600; cursor:pointer; border:1.5px solid #ddd; background:#fff; color:#666; transition:all 0.2s; }
+        .chip:hover,.chip.active { background:#2c3e50; color:#fff; border-color:#2c3e50; }
+        .lost-main { max-width:1200px; margin:0 auto; padding:2.5rem 2rem 4rem; }
+        .results-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.4rem; }
+        .results-meta span { font-size:0.85rem; color:#888; }
+        .sort-select { border:1.5px solid #ddd; border-radius:8px; padding:0.3rem 0.7rem; font-family:'Inter',sans-serif; font-size:0.82rem; cursor:pointer; outline:none; color:#555; }
+        .items-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.4rem; }
+        .item-card { background:#fff; border-radius:16px; box-shadow:0 4px 18px rgba(0,0,0,0.07); border:1px solid #f0f0f0; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.2s,box-shadow 0.2s; animation:cardIn 0.4s ease both; }
+        .item-card:hover { transform:translateY(-5px); box-shadow:0 12px 32px rgba(0,0,0,0.12); }
+        @keyframes cardIn { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+        .card-head { display:flex; align-items:center; gap:0.6rem; padding:0.8rem 1rem; border-bottom:1px solid #f5f5f5; }
+        .avatar { width:34px; height:34px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:0.85rem; color:#fff; flex-shrink:0; }
+        .card-meta .uname { font-weight:600; font-size:0.85rem; color:#2c3e50; }
+        .card-meta .udate { font-size:0.72rem; color:#aaa; }
+        .carousel { position:relative; background:#f0f0f0; aspect-ratio:4/3; overflow:hidden; }
+        .carousel-slide { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:4rem; background:#e8e8e8; }
+        .car-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.85); border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; display:grid; place-items:center; font-size:0.9rem; color:#333; z-index:2; transition:background 0.15s; }
+        .car-btn:hover { background:#fff; }
+        .car-btn.prev { left:0.5rem; }
+        .car-btn.next { right:0.5rem; }
+        .carousel-dots { position:absolute; bottom:6px; left:50%; transform:translateX(-50%); display:flex; gap:4px; }
+        .dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.6); transition:background 0.2s; }
+        .dot.active { background:#fff; }
+        .card-body { padding:0.9rem 1rem; flex:1; display:flex; flex-direction:column; gap:0.25rem; }
+        .card-title { font-weight:700; font-size:0.95rem; color:#1a2c3a; }
+        .card-loc { font-size:0.78rem; color:#888; display:flex; align-items:center; gap:0.3rem; }
+        .card-desc { font-size:0.8rem; color:#777; line-height:1.5; margin-top:0.2rem; display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+        .card-badge { display:inline-block; margin-top:0.4rem; font-size:0.7rem; font-weight:600; padding:0.15rem 0.55rem; border-radius:20px; background:#fff3cd; color:#856404; }
+        .card-foot { padding:0.75rem 1rem; border-top:1px solid #f5f5f5; display:flex; justify-content:space-between; align-items:center; }
+        .btn-contact { background:#27ae60; color:#fff; border:none; padding:0.42rem 1.1rem; border-radius:8px; font-family:'Inter',sans-serif; font-size:0.8rem; font-weight:600; cursor:pointer; transition:opacity 0.15s,transform 0.15s; }
+        .btn-contact:hover { opacity:0.88; transform:scale(1.04); }
+        .btn-save { background:none; border:1.5px solid #e0e0e0; border-radius:8px; padding:0.4rem 0.6rem; cursor:pointer; font-size:0.9rem; transition:all 0.15s; }
+        .btn-save:hover,.btn-save.saved { border-color:#e74c3c; color:#e74c3c; }
+        .empty-state { text-align:center; padding:4rem 2rem; }
+        .empty-state .emo { font-size:3.5rem; margin-bottom:1rem; }
+        .empty-state p { font-size:1rem; color:#bbb; }
+
+        .screen { display:none; }
+        .screen.active { display:block; }
+
+        @media (max-width:768px) {
+            .hero { flex-direction:column; text-align:center; padding-top:6rem; }
+            .hero-title { font-size:3rem; }
+            .hero-actions { align-items:center; }
+            .hero-images { height:300px; }
+            .img-1 { width:200px; height:150px; }
+            .img-2 { width:180px; height:130px; left:100px; }
+            .img-3 { width:190px; height:140px; left:30px; }
+            .footer-content { grid-template-columns:repeat(2,1fr); }
+            .nav-links { display:none; }
+            .form-section { padding:2rem 1.5rem; }
+            .button-group,.btn-row { flex-direction:column; }
+            .reg-header,.reg-body { padding-left:1.5rem; padding-right:1.5rem; }
+            .form-row { flex-direction:column; gap:0; }
+        }
+        @media (max-width:576px) {
+            .footer-content { grid-template-columns:1fr; }
+            .hero-title { font-size:2.5rem; }
+            .brand-name { font-size:3rem; }
+            .brand-icon { width:72px; height:72px; }
+            .items-grid { grid-template-columns:1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="authScreen" class="screen active">
+    <div class="auth-container">
+        <div class="page-wrapper">
+            <div class="main-title">
+                <div class="brand-icon"><i class="fas fa-search-location"></i></div>
+                <div class="brand-text">
+                    <span class="brand-name">UniFound</span>
+                    <span class="brand-tagline">Lost &amp; Found Portal</span>
+                </div>
+            </div>
+
+            <div id="loginView" class="view active">
+                <div class="card">
+                    <div class="form-section">
+                        <div class="login-title">Login</div>
+                        <div class="login-sub">Sign in to access your lost &amp; found dashboard</div>
+                        <form id="signinForm">
+                            <div class="input-group">
+                                <label><i class="far fa-user-circle"></i> Username</label>
+                                <div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="username" placeholder="john_doe or email@example.com"></div>
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-lock"></i> Password</label>
+                                <div class="input-wrapper"><i class="fas fa-key"></i><input type="password" id="password" placeholder="••••••••"></div>
+                            </div>
+                            <div class="forgot-link"><a href="#" id="forgotPasswordLink">Forgot Password?</a></div>
+                            <div class="button-group">
+                                <button type="submit" class="btn btn-signin">Sign In</button>
+                                <button type="button" class="btn btn-signup" id="signUpBtn">Sign Up</button>
+                            </div>
+                            <div id="formFeedback" class="toast-msg"></div>
+                            <div class="demo-hint"><i class="fas fa-info-circle"></i> Demo: use any credentials</div>
+                        </form>
+                    </div>
+                    <div class="help-row">
+                        <a href="#" class="help-link-item" data-help="Customer Support"><i class="fas fa-headset"></i> Support</a>
+                        <a href="#" class="help-link-item" data-help="Terms & Conditions"><i class="fas fa-file-contract"></i> Terms</a>
+                        <a href="#" class="help-link-item" data-help="Privacy Policy"><i class="fas fa-shield-alt"></i> Privacy</a>
+                    </div>
+                    <div class="contact-strip">
+                        <a href="tel:+94716520890"><i class="fas fa-phone-alt"></i> +94 716520890</a>
+                        <a href="mailto:UniFound@gmail.com"><i class="fas fa-envelope"></i> UniFound@gmail.com</a>
+                    </div>
+                    <div class="copyright">© Copyright 2026 UniFound — Lost &amp; Found Portal. All Rights Reserved.</div>
+                </div>
+            </div>
+
+            <div id="registerView" class="view reg-view">
+                <div class="card">
+                    <div class="reg-header">
+                        <div class="reg-header-title"><i class="fas fa-user-plus" style="margin-right:10px;color:#e2b13b;"></i>Create Account</div>
+                        <div class="reg-header-sub">Join UniFound and start reporting lost &amp; found items on campus</div>
+                    </div>
+                    <div class="reg-body">
+                        <form id="registerForm">
+                            <div class="section-label">Personal Information</div>
+                            <div class="form-row">
+                                <div class="input-group"><label>First Name</label><div class="input-wrapper"><i class="fas fa-id-badge"></i><input type="text" id="firstName" placeholder="e.g. John"></div></div>
+                                <div class="input-group"><label>Last Name</label><div class="input-wrapper"><i class="fas fa-id-badge"></i><input type="text" id="lastName" placeholder="e.g. Doe"></div></div>
+                            </div>
+                            <div class="input-group"><label>University Email</label><div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="student@university.edu"></div></div>
+                            <div class="form-row">
+                                <div class="input-group"><label>Student / Staff ID</label><div class="input-wrapper"><i class="fas fa-hashtag"></i><input type="text" id="studentId" placeholder="e.g. 20210001"></div></div>
+                                <div class="input-group"><label>Faculty / Department</label><div class="input-wrapper"><i class="fas fa-university"></i><select id="faculty"><option value="" disabled selected>Select your faculty</option><option>Faculty of Computing</option><option>Faculty of Engineering</option><option>Faculty of Business</option><option>Faculty of Science</option><option>Faculty of Arts</option><option>Faculty of Medicine</option><option>Administrative Staff</option><option>Other</option></select></div></div>
+                            </div>
+                            <div class="section-label">Account Credentials</div>
+                            <div class="input-group"><label>Username</label><div class="input-wrapper"><i class="fas fa-user-circle"></i><input type="text" id="regUsername" placeholder="Choose a unique username"></div></div>
+                            <div class="input-group">
+                                <label>Password</label>
+                                <div class="input-wrapper"><i class="fas fa-key"></i><input type="password" id="regPassword" placeholder="Min. 8 characters"></div>
+                                <div class="strength-bar-wrap"><div class="strength-bar" id="strengthBar"></div></div>
+                                <div class="strength-label" id="strengthLabel"></div>
+                            </div>
+                            <div class="input-group"><label>Confirm Password</label><div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="confirmPassword" placeholder="Re-enter your password"></div></div>
+                            <div class="terms-row"><input type="checkbox" id="termsCheck"><label for="termsCheck">I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> of UniFound.</label></div>
+                            <div class="btn-row">
+                                <button type="button" class="btn btn-back" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Login</button>
+                                <button type="submit" class="btn btn-register"><i class="fas fa-user-plus"></i> Create Account</button>
+                            </div>
+                            <div id="regFeedback" class="toast-msg"></div>
+                        </form>
+                        <div class="back-to-login">Already have an account? <a href="#" id="goToLoginLink">Sign in here</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- HOME -->
+<div id="homeScreen" class="screen">
+    <div class="home-container">
+        <nav class="navbar">
+            <div class="logo" onclick="goHome()"><div class="logo-icon">📦</div><span>UniFound</span></div>
+            <ul class="nav-links">
+                <li><a href="#" id="navHome" onclick="goHome();setActive(this)" class="active">Home</a></li>
+                <li><a href="#" id="navLost" onclick="goLost();setActive(this)">Lost</a></li>
+                <li><a href="#" onclick="openModal('lost');setActive(this)">Report Lost</a></li>
+                <li><a href="#" onclick="showToast('Found Items – coming soon!');setActive(this)">Found</a></li>
+                <li><a href="#" onclick="openModal('found');setActive(this)">Report Found</a></li>
+                <li><a href="#" onclick="showToast('Profile – coming soon!');setActive(this)">Profile</a></li>
+            </ul>
+            <!-- ↓ opens the custom modal, NOT a browser confirm() -->
+            <button class="btn-signout" onclick="openSignOutModal()">Sign Out</button>
+        </nav>
+
+        <div id="homeContent">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Find &amp;<br>Recover<br><span class="highlight-green">With</span> <span class="highlight-red">Ease</span></h1>
+                    <p class="hero-subtitle">Experience effortless recovery with our dedicated lost and found service. We connect people with their belongings through our community-driven platform.</p>
+                    <div class="hero-actions">
+                        <button class="action-btn btn-lost" onclick="openModal('lost')"><span class="btn-icon">📝</span><span>Lost</span></button>
+                        <button class="action-btn btn-found" onclick="openModal('found')"><span class="btn-icon">🔍</span><span>Found</span></button>
+                    </div>
+                </div>
+                <div class="hero-images">
+                    <div class="image-stack">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop" alt="" class="hero-img img-1">
+                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=300&fit=crop" alt="" class="hero-img img-2">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop" alt="" class="hero-img img-3">
+                    </div>
+                </div>
+            </section>
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li><li><a>Found</a></li><li><a onclick="openModal('found')">Report Found</a></li></ul></div>
+                    <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Support</a></li><li><a href="#">Terms &amp; Conditions</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+                    <div class="footer-section"><h3>Links</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">About Us</a></li></ul></div>
+                    <div class="footer-section"><h3>Contact</h3><p style="color:var(--light);margin-bottom:0.5rem;">Tel: +94 716520690<br>Email: UniFound@gmail.com</p><div class="social-links"><a href="#">🐦</a><a href="#">📘</a><a href="#">📷</a><a href="#">🐙</a></div></div>
+                </div>
+                <div class="footer-bottom"><p>© Copyright 2026 Lost and Found. All Right Reserved</p></div>
+            </footer>
+        </div>
+
+        <div id="lostContent" style="display:none;">
+            <div class="lost-page">
+                <div class="lost-hero">
+                    <h1>Lost <span>Items</span></h1>
+                    <div class="search-report-row">
+                        <div class="search-box"><i class="fas fa-search"></i><input type="text" id="lostSearchInput" placeholder="Search item name, location…" oninput="filterLostCards()"></div>
+                        <button class="btn-report-lost" onclick="openModal('lost')"><i class="fas fa-plus"></i> Report Lost</button>
+                    </div>
+                    <div class="filter-row">
+                        <div class="chip active" onclick="setChip(this,'all')">All</div>
+                        <div class="chip" onclick="setChip(this,'electronics')">Electronics</div>
+                        <div class="chip" onclick="setChip(this,'accessories')">Accessories</div>
+                        <div class="chip" onclick="setChip(this,'documents')">Documents</div>
+                        <div class="chip" onclick="setChip(this,'clothing')">Clothing</div>
+                        <div class="chip" onclick="setChip(this,'other')">Other</div>
+                    </div>
+                </div>
+                <div class="lost-main">
+                    <div class="results-meta">
+                        <span id="resultsCount">Showing all items</span>
+                        <select class="sort-select" onchange="sortCards(this.value)">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="alpha">A → Z</option>
+                        </select>
+                    </div>
+                    <div class="items-grid" id="lostGrid"></div>
+                    <div class="empty-state" id="emptyState" style="display:none;"><div class="emo">🔍</div><p>No lost items match your search.</p></div>
+                </div>
+                <footer class="footer">
+                    <div class="footer-content">
+                        <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li><li><a>Found</a></li><li><a onclick="openModal('found')">Report Found</a></li></ul></div>
+                        <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Support</a></li><li><a href="#">Terms &amp; Conditions</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+                        <div class="footer-section"><h3>Links</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">About Us</a></li></ul></div>
+                        <div class="footer-section"><h3>Contact</h3><p style="color:var(--light);margin-bottom:0.5rem;">Tel: +94 716520690<br>Email: UniFound@gmail.com</p><div class="social-links"><a>🐦</a><a>📘</a><a>📷</a><a>🐙</a></div></div>
+                    </div>
+                    <div class="footer-bottom"><p>© Copyright 2026 Lost and Found. All Right Reserved</p></div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ SIGN OUT MODAL ══ -->
+    <div id="signOutModal" class="modal">
+        <div class="modal-content so-modal-inner">
+            <span class="so-emoji">👋</span>
+            <h3>Leaving so soon?</h3>
+            <div class="so-user-badge" id="soUserBadge"><i class="fas fa-user-circle"></i> <span id="soUsername">User</span></div>
+            <p>Are you sure you want to sign out of your UniFound account?</p>
+            <div class="so-btn-row" id="soBtnRow">
+                <button class="so-stay" id="soStayBtn" onclick="closeSignOutModal()">Stay In</button>
+                <button class="so-leave" id="soLeaveBtn" onclick="doSignOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+            </div>
+            <div class="so-spinner-wrap" id="soSpinner">
+                <div class="so-spin"></div>
+                <span class="so-spin-txt">Signing you out…</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ REPORT MODAL ══ -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Report Item</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="reportForm" onsubmit="handleSubmit(event)">
+                <div class="form-group"><label>Item Name</label><input type="text" id="itemName" required placeholder="e.g., Black Wallet"></div>
+                <div class="form-group"><label>Category</label><select id="category" required><option value="">Select Category</option><option value="electronics">Electronics</option><option value="documents">Documents</option><option value="accessories">Accessories</option><option value="clothing">Clothing</option><option value="other">Other</option></select></div>
+                <div class="form-group"><label>Location</label><input type="text" id="location" required placeholder="e.g., Library 2nd Floor"></div>
+                <div class="form-group"><label>Date</label><input type="date" id="date" required></div>
+                <div class="form-group"><label>Description</label><textarea id="description" rows="3" placeholder="Add details about the item..."></textarea></div>
+                <div class="form-group"><label>Contact Info</label><input type="text" id="contact" required placeholder="Email or Phone"></div>
+                <button type="submit" class="submit-btn">Submit Report</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ══ CONTACT MODAL ══ -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content" style="max-width:380px;">
+            <div class="modal-header">
+                <h2 class="modal-title">Contact Reporter</h2>
+                <button class="close-btn" onclick="closeContactModal()">&times;</button>
+            </div>
+            <div id="contactModalBody" style="font-size:0.9rem;color:#555;line-height:1.8;"></div>
+            <button class="submit-btn" style="margin-top:1.2rem;" onclick="closeContactModal()">Close</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"><span id="toastIcon">✓</span><span id="toastMessage">Done!</span></div>
+</div>
+
+<script>
+/* ── DATA ── */
+const SEED = [
+    {id:1,user:'Alex M.',avatar:'#3498db',date:'Mar 24, 2024',title:'Black Leather Wallet',location:'SM City Cebu, North Wing',category:'accessories',desc:'Brown interior, contains university ID and some cash. Lost near the food court entrance around lunchtime.',emoji:'👛',contact:'alex@uni.edu',saved:false},
+    {id:2,user:'Bea L.',avatar:'#e74c3c',date:'Mar 22, 2024',title:'Blue Umbrella',location:'Ayala Center Cebu',category:'other',desc:'Compact folding blue umbrella with a floral pattern handle. Left at the bench outside the main entrance.',emoji:'☂️',contact:'bea@uni.edu',saved:false},
+    {id:3,user:'Carl T.',avatar:'#9b59b6',date:'Mar 20, 2024',title:'Silver Casio Watch',location:'IT Park, Cebu City',category:'accessories',desc:'Silver strap Casio G-Shock, small scratch on the bezel. Last seen while working at the coffee shop.',emoji:'⌚',contact:'+63 912 345 6789',saved:false},
+    {id:4,user:'Dana R.',avatar:'#f39c12',date:'Mar 18, 2024',title:'Brown Sling Bag',location:'Colon Street, Cebu City',category:'accessories',desc:'Small canvas sling bag, brown with yellow zipper. Contains charger, earphones, and a notebook.',emoji:'🎒',contact:'dana@uni.edu',saved:false},
+    {id:5,user:'Eli O.',avatar:'#27ae60',date:'Mar 15, 2024',title:'Laptop – Lenovo ThinkPad',location:'University Library, 3F',category:'electronics',desc:'Lenovo ThinkPad X1 Carbon, black, cat sticker on the lid. Left in a study carrel around 4pm.',emoji:'💻',contact:'eli@uni.edu',saved:false},
+    {id:6,user:'Faye S.',avatar:'#16a085',date:'Mar 12, 2024',title:'Student ID Card',location:'Cafeteria, Ground Floor',category:'documents',desc:'University ID from the Faculty of Engineering. Found near the tray return area.',emoji:'🪪',contact:'faye@uni.edu',saved:false},
+];
+let allItems=[...SEED], activeChip='all', currentSort='newest', currentReportType='';
+
+/* ── AUTH ── */
+const authScreen=document.getElementById('authScreen'), homeScreen=document.getElementById('homeScreen');
+const loginView=document.getElementById('loginView'), registerView=document.getElementById('registerView');
+const regFeedback=document.getElementById('regFeedback');
+
+function showLogin(){loginView.classList.add('active');registerView.classList.remove('active');regFeedback.classList.remove('show');}
+function showRegister(){loginView.classList.remove('active');registerView.classList.add('active');}
+function showAuthMsg(el,txt,err){if(!el)return;el.innerText=txt;el.style.backgroundColor=err?'#bc5a3c':'#2c5a70';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800);}
+
+document.getElementById('signinForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    const u=document.getElementById('username').value.trim(), p=document.getElementById('password').value;
+    if(!u){showAuthMsg(document.getElementById('formFeedback'),'Please enter your username',true);return;}
+    if(!p){showAuthMsg(document.getElementById('formFeedback'),'Password cannot be empty',true);return;}
+    sessionStorage.setItem('uf_user',u); sessionStorage.setItem('uf_loggedin','true');
+    authScreen.classList.remove('active'); homeScreen.classList.add('active');
+    showToast(`Welcome back, ${u}!`);
+});
+
+document.getElementById('signUpBtn').addEventListener('click',showRegister);
+document.getElementById('backBtn').addEventListener('click',showLogin);
+document.getElementById('goToLoginLink').addEventListener('click',e=>{e.preventDefault();showLogin();});
+
+document.getElementById('registerForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    const fn=document.getElementById('firstName').value.trim(), ln=document.getElementById('lastName').value.trim();
+    const em=document.getElementById('regEmail').value.trim(), si=document.getElementById('studentId').value.trim();
+    const fa=document.getElementById('faculty').value, un=document.getElementById('regUsername').value.trim();
+    const pw=document.getElementById('regPassword').value, cf=document.getElementById('confirmPassword').value;
+    const tc=document.getElementById('termsCheck').checked;
+    if(!fn){showAuthMsg(regFeedback,'Please enter your first name.',true);return;}
+    if(!ln){showAuthMsg(regFeedback,'Please enter your last name.',true);return;}
+    if(!em||!em.includes('@')){showAuthMsg(regFeedback,'Please enter a valid email.',true);return;}
+    if(!si){showAuthMsg(regFeedback,'Please enter your Student/Staff ID.',true);return;}
+    if(!fa){showAuthMsg(regFeedback,'Please select your faculty.',true);return;}
+    if(!un){showAuthMsg(regFeedback,'Please choose a username.',true);return;}
+    if(pw.length<8){showAuthMsg(regFeedback,'Password must be at least 8 characters.',true);return;}
+    if(pw!==cf){showAuthMsg(regFeedback,'Passwords do not match.',true);return;}
+    if(!tc){showAuthMsg(regFeedback,'Please accept the Terms & Conditions.',true);return;}
+    showAuthMsg(regFeedback,`Account created! Welcome, ${fn}!`,false);
+    setTimeout(()=>{
+        sessionStorage.setItem('uf_user',un); sessionStorage.setItem('uf_loggedin','true');
+        authScreen.classList.remove('active'); homeScreen.classList.add('active');
+        showToast(`Welcome, ${fn}! Account created.`);
+    },1500);
+});
+
+document.getElementById('forgotPasswordLink').addEventListener('click',e=>{
+    e.preventDefault();
+    const u=document.getElementById('username').value.trim();
+    showAuthMsg(document.getElementById('formFeedback'),u?`Reset link sent for "${u}" (demo)`:'Enter your username first.',!u);
+});
+document.querySelectorAll('.help-link-item').forEach(l=>{
+    l.addEventListener('click',e=>{e.preventDefault();showAuthMsg(document.getElementById('formFeedback'),`${l.dataset.help} – coming soon`,false);});
+});
+document.getElementById('regPassword').addEventListener('input',function(){
+    const v=this.value; let s=0;
+    if(v.length>=8)s++; if(/[A-Z]/.test(v))s++; if(/[0-9]/.test(v))s++; if(/[^A-Za-z0-9]/.test(v))s++;
+    const L=[{w:'0%',b:'transparent',l:''},{w:'25%',b:'#e05252',l:'Weak'},{w:'50%',b:'#e2b13b',l:'Fair'},{w:'75%',b:'#4fb3d4',l:'Good'},{w:'100%',b:'#4caf7d',l:'Strong'}];
+    document.getElementById('strengthBar').style.width=L[s].w; document.getElementById('strengthBar').style.background=L[s].b;
+    document.getElementById('strengthLabel').textContent=L[s].l; document.getElementById('strengthLabel').style.color=L[s].b;
+});
+if(sessionStorage.getItem('uf_loggedin')==='true'){authScreen.classList.remove('active');homeScreen.classList.add('active');}
+
+/* ── SIGN OUT MODAL ── */
+function openSignOutModal(){
+    // reset to initial state
+    document.getElementById('soSpinner').classList.remove('on');
+    document.getElementById('soBtnRow').style.display='';
+    document.getElementById('soLeaveBtn').disabled=false;
+    document.getElementById('soLeaveBtn').innerHTML='<i class="fas fa-sign-out-alt"></i> Sign Out';
+    // show current user
+    const u=sessionStorage.getItem('uf_user')||'User';
+    document.getElementById('soUsername').textContent=u;
+    document.getElementById('signOutModal').classList.add('active');
+}
+function closeSignOutModal(){document.getElementById('signOutModal').classList.remove('active');}
+function doSignOut(){
+    const leaveBtn=document.getElementById('soLeaveBtn');
+    const stayBtn=document.getElementById('soStayBtn');
+    // disable both buttons, show spinner
+    leaveBtn.disabled=true;
+    leaveBtn.innerHTML='<i class="fas fa-sign-out-alt"></i> Signing out…';
+    stayBtn.style.opacity='0.4'; stayBtn.style.pointerEvents='none';
+    document.getElementById('soSpinner').classList.add('on');
+    setTimeout(()=>{
+        sessionStorage.clear();
+        closeSignOutModal();
+        homeScreen.classList.remove('active');
+        authScreen.classList.add('active');
+        goHome(); showLogin();
+        setTimeout(()=>showToast('Signed out successfully. See you soon! 👋'),150);
+    },1500);
+}
+document.getElementById('signOutModal').addEventListener('click',e=>{if(e.target===document.getElementById('signOutModal'))closeSignOutModal();});
+
+/* ── NAV ── */
+function setActive(el){document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));el.classList.add('active');}
+function goHome(){document.getElementById('homeContent').style.display='';document.getElementById('lostContent').style.display='none';document.getElementById('navHome').classList.add('active');}
+function goLost(){
+    document.getElementById('homeContent').style.display='none';
+    document.getElementById('lostContent').style.display='';
+    document.getElementById('navLost').classList.add('active');
+    const stored=JSON.parse(localStorage.getItem('reports')||'[]').filter(r=>r.type==='lost');
+    stored.forEach(r=>{
+        if(!allItems.find(i=>i.id===r.id)){
+            allItems.unshift({id:r.id,user:sessionStorage.getItem('uf_user')||'You',avatar:'#e74c3c',date:r.date||'Recently',title:r.itemName,location:r.location,category:r.category,desc:r.description||'',emoji:catEmoji(r.category),contact:r.contact,saved:false});
+        }
+    });
+    renderLostCards();
+}
+function catEmoji(c){return{electronics:'💻',documents:'🪪',accessories:'⌚',clothing:'👕',other:'📦'}[c]||'📦';}
+
+/* ── LOST PAGE ── */
+function setChip(el,cat){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');activeChip=cat;renderLostCards();}
+function filterLostCards(){renderLostCards();}
+function sortCards(v){currentSort=v;renderLostCards();}
+function renderLostCards(){
+    const q=(document.getElementById('lostSearchInput').value||'').toLowerCase();
+    let items=[...allItems];
+    if(activeChip!=='all') items=items.filter(i=>i.category===activeChip);
+    if(q) items=items.filter(i=>i.title.toLowerCase().includes(q)||i.location.toLowerCase().includes(q)||i.desc.toLowerCase().includes(q));
+    if(currentSort==='alpha') items.sort((a,b)=>a.title.localeCompare(b.title));
+    else if(currentSort==='oldest') items.reverse();
+    const grid=document.getElementById('lostGrid'), empty=document.getElementById('emptyState'), count=document.getElementById('resultsCount');
+    if(!items.length){grid.innerHTML='';empty.style.display='';count.textContent='No items found';return;}
+    empty.style.display='none'; count.textContent=`Showing ${items.length} item${items.length!==1?'s':''}`;
+    grid.innerHTML=items.map((item,idx)=>`
+        <div class="item-card" style="animation-delay:${idx*0.07}s">
+            <div class="card-head">
+                <div class="avatar" style="background:${item.avatar}">${item.user[0]}</div>
+                <div class="card-meta"><div class="uname">${item.user}</div><div class="udate">${item.date}</div></div>
+            </div>
+            <div class="carousel" id="car-${item.id}">
+                <div class="carousel-slide" style="font-size:4rem;">${item.emoji}</div>
+                <button class="car-btn prev" onclick="carPrev(${item.id})">&#8249;</button>
+                <button class="car-btn next" onclick="carNext(${item.id})">&#8250;</button>
+                <div class="carousel-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+            </div>
+            <div class="card-body">
+                <div class="card-title">${item.title}</div>
+                <div class="card-loc"><i class="fas fa-map-marker-alt" style="color:#e74c3c;font-size:0.7rem;"></i> ${item.location}</div>
+                <div class="card-badge">${item.category.charAt(0).toUpperCase()+item.category.slice(1)}</div>
+                <p class="card-desc">${item.desc}</p>
+            </div>
+            <div class="card-foot">
+                <button class="btn-save ${item.saved?'saved':''}" onclick="toggleSave(${item.id},this)">${item.saved?'❤️':'🤍'}</button>
+                <button class="btn-contact" onclick="showContact(${item.id})">Contact</button>
+            </div>
+        </div>`).join('');
+}
+const carStates={};
+function carNext(id){carStates[id]=((carStates[id]||0)+1)%3;updateCarousel(id);}
+function carPrev(id){carStates[id]=((carStates[id]||0)+2)%3;updateCarousel(id);}
+function updateCarousel(id){
+    const item=allItems.find(i=>i.id===id); if(!item)return;
+    const car=document.getElementById(`car-${id}`); if(!car)return;
+    const idx=carStates[id]||0;
+    const slides=[
+        `<div class="carousel-slide" style="font-size:4rem;">${item.emoji}</div>`,
+        `<div class="carousel-slide" style="background:#dde;font-size:0.85rem;color:#999;flex-direction:column;gap:4px;display:flex;align-items:center;justify-content:center;">📷<span>No image 2</span></div>`,
+        `<div class="carousel-slide" style="background:#eed;font-size:0.85rem;color:#999;flex-direction:column;gap:4px;display:flex;align-items:center;justify-content:center;">📷<span>No image 3</span></div>`
+    ];
+    car.querySelector('.carousel-slide').outerHTML=slides[idx];
+    car.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+function toggleSave(id,btn){
+    const item=allItems.find(i=>i.id===id);if(!item)return;
+    item.saved=!item.saved; btn.classList.toggle('saved',item.saved); btn.textContent=item.saved?'❤️':'🤍';
+    showToast(item.saved?'Item saved!':'Removed from saved.');
+}
+function showContact(id){
+    const item=allItems.find(i=>i.id===id);if(!item)return;
+    document.getElementById('contactModalBody').innerHTML=`<p><strong>Item:</strong> ${item.title}</p><p><strong>Reported by:</strong> ${item.user}</p><p><strong>Contact:</strong> ${item.contact}</p><p style="margin-top:0.8rem;font-size:0.78rem;color:#aaa;">Please reach out respectfully. UniFound does not mediate disputes.</p>`;
+    document.getElementById('contactModal').classList.add('active');
+}
+function closeContactModal(){document.getElementById('contactModal').classList.remove('active');}
+
+/* ── REPORT MODAL ── */
+function openModal(type){
+    currentReportType=type;
+    const t=document.getElementById('modalTitle');
+    t.textContent=type==='lost'?'Report Lost Item':'Report Found Item';
+    t.style.color=type==='lost'?'#e74c3c':'#27ae60';
+    document.getElementById('reportModal').classList.add('active');
+    const di=document.getElementById('date'); if(di)di.valueAsDate=new Date();
+}
+function closeModal(){document.getElementById('reportModal').classList.remove('active');document.getElementById('reportForm').reset();}
+function handleSubmit(e){
+    e.preventDefault();
+    const data={id:Date.now(),type:currentReportType,itemName:document.getElementById('itemName').value,category:document.getElementById('category').value,location:document.getElementById('location').value,date:document.getElementById('date').value,description:document.getElementById('description').value,contact:document.getElementById('contact').value};
+    const btn=e.target.querySelector('.submit-btn'); btn.textContent='Submitting…'; btn.disabled=true;
+    setTimeout(()=>{
+        const reports=JSON.parse(localStorage.getItem('reports')||'[]'); reports.push(data); localStorage.setItem('reports',JSON.stringify(reports));
+        if(data.type==='lost') allItems.unshift({id:data.id,user:sessionStorage.getItem('uf_user')||'You',avatar:'#e74c3c',date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),title:data.itemName,location:data.location,category:data.category,desc:data.description||'',emoji:catEmoji(data.category),contact:data.contact,saved:false});
+        btn.textContent='Submit Report'; btn.disabled=false;
+        closeModal();
+        showToast(data.type==='lost'?'✅ Lost item reported!':'✅ Found item reported! Thank you.');
+        createConfetti();
+        if(document.getElementById('lostContent').style.display!=='none') renderLostCards();
+    },900);
+}
+
+/* ── TOAST ── */
+function showToast(msg,type='success'){
+    const t=document.getElementById('toast');if(!t)return;
+    t.className=`toast ${type}`; document.getElementById('toastIcon').textContent=type==='success'?'✓':'✕'; document.getElementById('toastMessage').textContent=msg;
+    t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+/* ── CONFETTI ── */
+function createConfetti(){
+    const cols=['#e74c3c','#27ae60','#f39c12','#3498db','#9b59b6'];
+    for(let i=0;i<40;i++){
+        const c=document.createElement('div');
+        c.style.cssText=`position:fixed;width:9px;height:9px;background:${cols[Math.floor(Math.random()*cols.length)]};left:${Math.random()*100}vw;top:-10px;border-radius:50%;z-index:9999;pointer-events:none;`;
+        document.body.appendChild(c);
+        const a=c.animate([{transform:'translateY(0) rotate(0deg)',opacity:1},{transform:`translateY(${window.innerHeight}px) rotate(${Math.random()*360}deg)`,opacity:0}],{duration:Math.random()*3000+2000,easing:'cubic-bezier(0.25,0.46,0.45,0.94)'});
+        a.onfinish=()=>c.remove();
+    }
+}
+
+/* ── PARALLAX ── */
+document.addEventListener('mousemove',e=>{
+    document.querySelectorAll('.hero-img').forEach((img,i)=>{
+        const sp=(i+1)*0.5,x=(window.innerWidth-e.pageX*2)/100,y=(window.innerHeight-e.pageY*2)/100;
+        img.style.transform=`translate(${x*sp}px,${y*sp}px) rotate(${i===0?-5:i===1?5:-3}deg)`;
+    });
+});
+
+/* ── OUTSIDE CLICK CLOSE ── */
+document.getElementById('reportModal').addEventListener('click',e=>{if(e.target===document.getElementById('reportModal'))closeModal();});
+document.getElementById('contactModal').addEventListener('click',e=>{if(e.target===document.getElementById('contactModal'))closeContactModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeContactModal();closeSignOutModal();}});
+</script>
+</body>
+</html>
