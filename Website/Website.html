@@ -36,6 +36,7 @@
         .btn { flex: 1; padding: 0.88rem 0; border-radius: 2.5rem; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; text-align: center; border: none; font-family: 'Inter', sans-serif; }
         .btn-signin, .btn-register { background: #1E3C4F; color: white; }
         .btn-signin:hover, .btn-register:hover { background: #0f2e3f; transform: translateY(-2px); }
+        .btn-signin:disabled, .btn-register:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .btn-signup, .btn-back { background: transparent; color: #1E3C4F; border: 1.5px solid #cbdbe0; }
         .btn-signup:hover, .btn-back:hover { background: #f0f4fa; border-color: #1E3C4F; }
         .forgot-link { text-align: right; margin: 0.5rem 0 1rem; }
@@ -52,7 +53,6 @@
         .copyright { text-align: center; margin-top: 1.2rem; padding: 1rem 2.2rem 2rem; font-size: 0.68rem; color: #9aafba; }
         .toast-msg { background: #2c5a70; color: white; padding: 0.5rem 1rem; border-radius: 3rem; font-size: 0.75rem; font-weight: 500; text-align: center; margin-top: 0.75rem; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
         .toast-msg.show { opacity: 1; }
-        .demo-hint { font-size: 0.7rem; text-align: center; margin-top: 1rem; color: #8ea0ad; }
         .reg-view.view { max-width: 780px; }
         .reg-header { background: linear-gradient(135deg, #1E3C4F, #2A5F7A); padding: 2rem 2.5rem 1.6rem; }
         .reg-header-title { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
@@ -76,7 +76,6 @@
 
         .home-container { font-family: 'Inter', sans-serif; background: linear-gradient(135deg,#fff5f5,#f0fff4); min-height:100vh; color:var(--dark); overflow-x:hidden; }
         .navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 5%; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); position:fixed; width:100%; top:0; z-index:1000; box-shadow:0 2px 10px rgba(0,0,0,0.06); }
-        @keyframes slideDown { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
         .logo { display:flex; align-items:center; gap:0.5rem; font-weight:bold; font-size:1.5rem; color:var(--dark); cursor:pointer; }
         .logo-icon { width:40px; height:40px; background:linear-gradient(135deg,#f39c12,#e74c3c); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; animation:bounce 2s infinite; }
         @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
@@ -128,7 +127,6 @@
         .social-links a:hover { background:var(--green); transform:translateY(-3px); }
         .footer-bottom { text-align:center; margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(0,0,0,0.05); color:var(--light); font-size:0.9rem; }
 
-        /* MODAL base */
         .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
         .modal.active { display:flex; animation:fadeIn 0.3s ease; }
         @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -144,8 +142,8 @@
         .form-group input:focus,.form-group textarea:focus,.form-group select:focus { outline:none; border-color:var(--green); }
         .submit-btn { width:100%; padding:1rem; background:linear-gradient(135deg,var(--green),#229954); color:white; border:none; border-radius:8px; font-size:1rem; font-weight:600; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; }
         .submit-btn:hover { transform:translateY(-2px); box-shadow:0 5px 15px rgba(39,174,96,0.4); }
+        .submit-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
 
-        /* ── SIGN OUT MODAL ── */
         .so-modal-inner { max-width:360px; text-align:center; padding:2.5rem 2rem 2rem; }
         .so-emoji { font-size:3.2rem; display:block; margin-bottom:1rem; }
         .so-modal-inner h3 { font-size:1.3rem; font-weight:700; color:var(--dark); margin-bottom:0.5rem; }
@@ -163,14 +161,12 @@
         @keyframes spin { to{transform:rotate(360deg)} }
         .so-spin-txt { font-size:0.82rem; color:#999; }
 
-        /* TOAST */
         .toast { position:fixed; bottom:30px; right:30px; background:var(--dark); color:white; padding:1rem 2rem; border-radius:8px; box-shadow:0 5px 20px rgba(0,0,0,0.3); display:none; align-items:center; gap:0.5rem; z-index:3000; }
         .toast.show { display:flex; animation:slideInRight 0.3s ease; }
         @keyframes slideInRight { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
         .toast.success { background:var(--green); }
         .toast.error { background:var(--red); }
 
-        /* LOST PAGE */
         .lost-page { font-family:'Inter',sans-serif; background:linear-gradient(135deg,#fff5f5,#f0fff4); min-height:100vh; }
         .lost-hero { background:linear-gradient(135deg,#c8ead8,#fffde7 45%,#fce4ec); padding:7rem 5% 3rem; text-align:center; }
         .lost-hero h1 { font-size:clamp(2.2rem,5vw,3.4rem); font-weight:800; letter-spacing:-0.03em; color:#c0392b; }
@@ -194,6 +190,8 @@
         .item-card { background:#fff; border-radius:16px; box-shadow:0 4px 18px rgba(0,0,0,0.07); border:1px solid #f0f0f0; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.2s,box-shadow 0.2s; animation:cardIn 0.4s ease both; }
         .item-card:hover { transform:translateY(-5px); box-shadow:0 12px 32px rgba(0,0,0,0.12); }
         @keyframes cardIn { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+        .item-card.deleting { animation: cardDelete 0.35s ease forwards; }
+        @keyframes cardDelete { 0%{transform:scale(1);opacity:1} 60%{transform:scale(0.92);opacity:0.5} 100%{transform:scale(0.85);opacity:0} }
         .card-head { display:flex; align-items:center; gap:0.6rem; padding:0.8rem 1rem; border-bottom:1px solid #f5f5f5; }
         .avatar { width:34px; height:34px; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:0.85rem; color:#fff; flex-shrink:0; }
         .card-meta .uname { font-weight:600; font-size:0.85rem; color:#2c3e50; }
@@ -212,17 +210,38 @@
         .card-loc { font-size:0.78rem; color:#888; display:flex; align-items:center; gap:0.3rem; }
         .card-desc { font-size:0.8rem; color:#777; line-height:1.5; margin-top:0.2rem; display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
         .card-badge { display:inline-block; margin-top:0.4rem; font-size:0.7rem; font-weight:600; padding:0.15rem 0.55rem; border-radius:20px; background:#fff3cd; color:#856404; }
-        .card-foot { padding:0.75rem 1rem; border-top:1px solid #f5f5f5; display:flex; justify-content:space-between; align-items:center; }
+        .card-foot { padding:0.75rem 1rem; border-top:1px solid #f5f5f5; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+        .card-foot-actions { display:flex; gap:0.45rem; align-items:center; }
         .btn-contact { background:#27ae60; color:#fff; border:none; padding:0.42rem 1.1rem; border-radius:8px; font-family:'Inter',sans-serif; font-size:0.8rem; font-weight:600; cursor:pointer; transition:opacity 0.15s,transform 0.15s; }
         .btn-contact:hover { opacity:0.88; transform:scale(1.04); }
         .btn-save { background:none; border:1.5px solid #e0e0e0; border-radius:8px; padding:0.4rem 0.6rem; cursor:pointer; font-size:0.9rem; transition:all 0.15s; }
         .btn-save:hover,.btn-save.saved { border-color:#e74c3c; color:#e74c3c; }
+        .btn-delete-card { background:none; border:1.5px solid #fac5c0; border-radius:8px; padding:0.42rem 0.75rem; cursor:pointer; font-size:0.8rem; color:#e74c3c; font-family:'Inter',sans-serif; font-weight:600; display:flex; align-items:center; gap:0.3rem; transition:all 0.2s; white-space:nowrap; }
+        .btn-delete-card:hover { background:#fff0ee; border-color:#e74c3c; transform:scale(1.04); }
+        .owner-badge { font-size:0.66rem; font-weight:700; background:linear-gradient(135deg,#e2b13b,#f5c842); color:#5a3e00; border-radius:20px; padding:0.12rem 0.5rem; letter-spacing:0.03em; margin-left:auto; }
         .empty-state { text-align:center; padding:4rem 2rem; }
         .empty-state .emo { font-size:3.5rem; margin-bottom:1rem; }
         .empty-state p { font-size:1rem; color:#bbb; }
-
         .screen { display:none; }
         .screen.active { display:block; }
+
+        /* Loading overlay */
+        .loading-overlay { position:fixed; inset:0; background:rgba(255,255,255,0.85); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; gap:1rem; backdrop-filter:blur(4px); }
+        .loading-overlay.hidden { display:none; }
+        .loading-spinner { width:44px; height:44px; border:4px solid #e2e8f0; border-top-color:#1E3C4F; border-radius:50%; animation:spin 0.7s linear infinite; }
+        .loading-overlay p { font-size:0.9rem; color:#5a6e7c; font-family:'Inter',sans-serif; font-weight:500; }
+
+        .del-modal-inner { max-width: 370px; text-align: center; padding: 2.5rem 2rem 2rem; }
+        .del-emoji { font-size: 3rem; display: block; margin-bottom: 1rem; }
+        .del-modal-inner h3 { font-size: 1.25rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+        .del-item-name { font-size: 0.9rem; font-weight: 700; color: #e74c3c; background: #fff0ee; border-radius: 8px; padding: 0.4rem 0.9rem; display: inline-block; margin: 0.5rem 0 1rem; }
+        .del-modal-inner p { font-size: 0.85rem; color: #888; margin-bottom: 1.6rem; line-height: 1.5; }
+        .del-btn-row { display: flex; gap: 0.75rem; }
+        .del-cancel { flex: 1; padding: 0.8rem; border: 2px solid #e0e0e0; background: transparent; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; color: #555; transition: all 0.2s; }
+        .del-cancel:hover { border-color: #aaa; background: #f5f5f5; }
+        .del-confirm { flex: 1; padding: 0.8rem; border: none; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(231,76,60,0.3); display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+        .del-confirm:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(231,76,60,0.4); }
+        .del-confirm:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
         @media (max-width:768px) {
             .hero { flex-direction:column; text-align:center; padding-top:6rem; }
@@ -250,8 +269,14 @@
 </head>
 <body>
 
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p id="loadingMsg">Connecting to UniFound…</p>
+</div>
+
 <!-- AUTH -->
-<div id="authScreen" class="screen active">
+<div id="authScreen" class="screen">
     <div class="auth-container">
         <div class="page-wrapper">
             <div class="main-title">
@@ -269,26 +294,25 @@
                         <div class="login-sub">Sign in to access your lost &amp; found dashboard</div>
                         <form id="signinForm">
                             <div class="input-group">
-                                <label><i class="far fa-user-circle"></i> Username</label>
-                                <div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="username" placeholder="john_doe or email@example.com"></div>
+                                <label><i class="far fa-user-circle"></i> Email</label>
+                                <div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="loginEmail" placeholder="your@email.com" required></div>
                             </div>
                             <div class="input-group">
                                 <label><i class="fas fa-lock"></i> Password</label>
-                                <div class="input-wrapper"><i class="fas fa-key"></i><input type="password" id="password" placeholder="••••••••"></div>
+                                <div class="input-wrapper"><i class="fas fa-key"></i><input type="password" id="loginPassword" placeholder="••••••••" required></div>
                             </div>
                             <div class="forgot-link"><a href="#" id="forgotPasswordLink">Forgot Password?</a></div>
                             <div class="button-group">
-                                <button type="submit" class="btn btn-signin">Sign In</button>
+                                <button type="submit" class="btn btn-signin" id="signinBtn">Sign In</button>
                                 <button type="button" class="btn btn-signup" id="signUpBtn">Sign Up</button>
                             </div>
                             <div id="formFeedback" class="toast-msg"></div>
-                            <div class="demo-hint"><i class="fas fa-info-circle"></i> Demo: use any credentials</div>
                         </form>
                     </div>
                     <div class="help-row">
-                        <a href="#" class="help-link-item" data-help="Customer Support"><i class="fas fa-headset"></i> Support</a>
-                        <a href="#" class="help-link-item" data-help="Terms & Conditions"><i class="fas fa-file-contract"></i> Terms</a>
-                        <a href="#" class="help-link-item" data-help="Privacy Policy"><i class="fas fa-shield-alt"></i> Privacy</a>
+                        <a href="#"><i class="fas fa-headset"></i> Support</a>
+                        <a href="#"><i class="fas fa-file-contract"></i> Terms</a>
+                        <a href="#"><i class="fas fa-shield-alt"></i> Privacy</a>
                     </div>
                     <div class="contact-strip">
                         <a href="tel:+94716520890"><i class="fas fa-phone-alt"></i> +94 716520890</a>
@@ -308,27 +332,27 @@
                         <form id="registerForm">
                             <div class="section-label">Personal Information</div>
                             <div class="form-row">
-                                <div class="input-group"><label>First Name</label><div class="input-wrapper"><i class="fas fa-id-badge"></i><input type="text" id="firstName" placeholder="e.g. John"></div></div>
-                                <div class="input-group"><label>Last Name</label><div class="input-wrapper"><i class="fas fa-id-badge"></i><input type="text" id="lastName" placeholder="e.g. Doe"></div></div>
+                                <div class="input-group"><label>First Name</label><div class="input-wrapper"><i class="fas fa-id-badge"></i><input type="text" id="firstName" placeholder="e.g. John" required></div></div>
+                                <div class="input-group"><label>Last Name</label><div class="input-wrapper"><i class="fas fa-id-badge"></i><input type="text" id="lastName" placeholder="e.g. Doe" required></div></div>
                             </div>
-                            <div class="input-group"><label>University Email</label><div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="student@university.edu"></div></div>
+                            <div class="input-group"><label>University Email</label><div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="student@university.edu" required></div></div>
                             <div class="form-row">
-                                <div class="input-group"><label>Student / Staff ID</label><div class="input-wrapper"><i class="fas fa-hashtag"></i><input type="text" id="studentId" placeholder="e.g. 20210001"></div></div>
-                                <div class="input-group"><label>Faculty / Department</label><div class="input-wrapper"><i class="fas fa-university"></i><select id="faculty"><option value="" disabled selected>Select your faculty</option><option>Faculty of Computing</option><option>Faculty of Engineering</option><option>Faculty of Business</option><option>Faculty of Science</option><option>Faculty of Arts</option><option>Faculty of Medicine</option><option>Administrative Staff</option><option>Other</option></select></div></div>
+                                <div class="input-group"><label>Student / Staff ID</label><div class="input-wrapper"><i class="fas fa-hashtag"></i><input type="text" id="studentId" placeholder="e.g. 20210001" required></div></div>
+                                <div class="input-group"><label>Faculty / Department</label><div class="input-wrapper"><i class="fas fa-university"></i><select id="faculty" required><option value="" disabled selected>Select your faculty</option><option>Faculty of Computing</option><option>Faculty of Engineering</option><option>Faculty of Business</option><option>Faculty of Science</option><option>Faculty of Arts</option><option>Faculty of Medicine</option><option>Administrative Staff</option><option>Other</option></select></div></div>
                             </div>
                             <div class="section-label">Account Credentials</div>
-                            <div class="input-group"><label>Username</label><div class="input-wrapper"><i class="fas fa-user-circle"></i><input type="text" id="regUsername" placeholder="Choose a unique username"></div></div>
+                            <div class="input-group"><label>Display Name / Username</label><div class="input-wrapper"><i class="fas fa-user-circle"></i><input type="text" id="regUsername" placeholder="Choose a display name" required></div></div>
                             <div class="input-group">
                                 <label>Password</label>
-                                <div class="input-wrapper"><i class="fas fa-key"></i><input type="password" id="regPassword" placeholder="Min. 8 characters"></div>
+                                <div class="input-wrapper"><i class="fas fa-key"></i><input type="password" id="regPassword" placeholder="Min. 8 characters" required></div>
                                 <div class="strength-bar-wrap"><div class="strength-bar" id="strengthBar"></div></div>
                                 <div class="strength-label" id="strengthLabel"></div>
                             </div>
-                            <div class="input-group"><label>Confirm Password</label><div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="confirmPassword" placeholder="Re-enter your password"></div></div>
+                            <div class="input-group"><label>Confirm Password</label><div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="confirmPassword" placeholder="Re-enter your password" required></div></div>
                             <div class="terms-row"><input type="checkbox" id="termsCheck"><label for="termsCheck">I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> of UniFound.</label></div>
                             <div class="btn-row">
-                                <button type="button" class="btn btn-back" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Login</button>
-                                <button type="submit" class="btn btn-register"><i class="fas fa-user-plus"></i> Create Account</button>
+                                <button type="button" class="btn btn-back" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
+                                <button type="submit" class="btn btn-register" id="registerBtn"><i class="fas fa-user-plus"></i> Create Account</button>
                             </div>
                             <div id="regFeedback" class="toast-msg"></div>
                         </form>
@@ -353,7 +377,6 @@
                 <li><a href="#" onclick="openModal('found');setActive(this)">Report Found</a></li>
                 <li><a href="#" onclick="showToast('Profile – coming soon!');setActive(this)">Profile</a></li>
             </ul>
-            <!-- ↓ opens the custom modal, NOT a browser confirm() -->
             <button class="btn-signout" onclick="openSignOutModal()">Sign Out</button>
         </nav>
 
@@ -405,7 +428,7 @@
                 </div>
                 <div class="lost-main">
                     <div class="results-meta">
-                        <span id="resultsCount">Showing all items</span>
+                        <span id="resultsCount">Loading items…</span>
                         <select class="sort-select" onchange="sortCards(this.value)">
                             <option value="newest">Newest First</option>
                             <option value="oldest">Oldest First</option>
@@ -417,10 +440,10 @@
                 </div>
                 <footer class="footer">
                     <div class="footer-content">
-                        <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li><li><a>Found</a></li><li><a onclick="openModal('found')">Report Found</a></li></ul></div>
-                        <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Support</a></li><li><a href="#">Terms &amp; Conditions</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
-                        <div class="footer-section"><h3>Links</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">About Us</a></li></ul></div>
-                        <div class="footer-section"><h3>Contact</h3><p style="color:var(--light);margin-bottom:0.5rem;">Tel: +94 716520690<br>Email: UniFound@gmail.com</p><div class="social-links"><a>🐦</a><a>📘</a><a>📷</a><a>🐙</a></div></div>
+                        <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li></ul></div>
+                        <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Support</a></li><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+                        <div class="footer-section"><h3>Links</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Facebook</a></li></ul></div>
+                        <div class="footer-section"><h3>Contact</h3><p style="color:var(--light);">Tel: +94 716520690<br>Email: UniFound@gmail.com</p></div>
                     </div>
                     <div class="footer-bottom"><p>© Copyright 2026 Lost and Found. All Right Reserved</p></div>
                 </footer>
@@ -428,7 +451,7 @@
         </div>
     </div>
 
-    <!-- ══ SIGN OUT MODAL ══ -->
+    <!-- SIGN OUT MODAL -->
     <div id="signOutModal" class="modal">
         <div class="modal-content so-modal-inner">
             <span class="so-emoji">👋</span>
@@ -446,7 +469,21 @@
         </div>
     </div>
 
-    <!-- ══ REPORT MODAL ══ -->
+    <!-- DELETE MODAL -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content del-modal-inner">
+            <span class="del-emoji">🗑️</span>
+            <h3>Delete this report?</h3>
+            <div class="del-item-name" id="delItemName">Item Name</div>
+            <p>This will permanently remove the lost item report from the database. This action cannot be undone.</p>
+            <div class="del-btn-row">
+                <button class="del-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button class="del-confirm" id="delConfirmBtn" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i> Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- REPORT MODAL -->
     <div id="reportModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -460,12 +497,12 @@
                 <div class="form-group"><label>Date</label><input type="date" id="date" required></div>
                 <div class="form-group"><label>Description</label><textarea id="description" rows="3" placeholder="Add details about the item..."></textarea></div>
                 <div class="form-group"><label>Contact Info</label><input type="text" id="contact" required placeholder="Email or Phone"></div>
-                <button type="submit" class="submit-btn">Submit Report</button>
+                <button type="submit" class="submit-btn" id="submitReportBtn">Submit Report</button>
             </form>
         </div>
     </div>
 
-    <!-- ══ CONTACT MODAL ══ -->
+    <!-- CONTACT MODAL -->
     <div id="contactModal" class="modal">
         <div class="modal-content" style="max-width:380px;">
             <div class="modal-header">
@@ -480,135 +517,271 @@
     <div id="toast" class="toast"><span id="toastIcon">✓</span><span id="toastMessage">Done!</span></div>
 </div>
 
+<!-- Firebase SDK (must be type="module" but we expose globals via window) -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAKgg3rZqij46ZdxKwWJNhT2GfL7b527Ks",
+        authDomain: "unifound-3beef.firebaseapp.com",
+        projectId: "unifound-3beef",
+        storageBucket: "unifound-3beef.firebasestorage.app",
+        messagingSenderId: "108359136392",
+        appId: "1:108359136392:web:2953171b97e32a4a649b3d",
+        measurementId: "G-71DTPDTNSF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // ── Expose to global scope so non-module script can call them ──
+    window._fb = {
+        auth, db,
+        createUserWithEmailAndPassword, signInWithEmailAndPassword,
+        signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail,
+        collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp
+    };
+
+    // ── Auth state listener ──
+    onAuthStateChanged(auth, (user) => {
+        document.getElementById('loadingOverlay').classList.add('hidden');
+        if (user) {
+            window._currentUser = user;
+            document.getElementById('authScreen').classList.remove('active');
+            document.getElementById('homeScreen').classList.add('active');
+            document.getElementById('soUsername').textContent = user.displayName || user.email;
+        } else {
+            window._currentUser = null;
+            document.getElementById('homeScreen').classList.remove('active');
+            document.getElementById('authScreen').classList.add('active');
+            window.showLogin && window.showLogin();
+        }
+    });
+</script>
+
 <script>
-/* ── DATA ── */
-const SEED = [
-    {id:1,user:'Alex M.',avatar:'#3498db',date:'Mar 24, 2024',title:'Black Leather Wallet',location:'SM City Cebu, North Wing',category:'accessories',desc:'Brown interior, contains university ID and some cash. Lost near the food court entrance around lunchtime.',emoji:'👛',contact:'alex@uni.edu',saved:false},
-    {id:2,user:'Bea L.',avatar:'#e74c3c',date:'Mar 22, 2024',title:'Blue Umbrella',location:'Ayala Center Cebu',category:'other',desc:'Compact folding blue umbrella with a floral pattern handle. Left at the bench outside the main entrance.',emoji:'☂️',contact:'bea@uni.edu',saved:false},
-    {id:3,user:'Carl T.',avatar:'#9b59b6',date:'Mar 20, 2024',title:'Silver Casio Watch',location:'IT Park, Cebu City',category:'accessories',desc:'Silver strap Casio G-Shock, small scratch on the bezel. Last seen while working at the coffee shop.',emoji:'⌚',contact:'+63 912 345 6789',saved:false},
-    {id:4,user:'Dana R.',avatar:'#f39c12',date:'Mar 18, 2024',title:'Brown Sling Bag',location:'Colon Street, Cebu City',category:'accessories',desc:'Small canvas sling bag, brown with yellow zipper. Contains charger, earphones, and a notebook.',emoji:'🎒',contact:'dana@uni.edu',saved:false},
-    {id:5,user:'Eli O.',avatar:'#27ae60',date:'Mar 15, 2024',title:'Laptop – Lenovo ThinkPad',location:'University Library, 3F',category:'electronics',desc:'Lenovo ThinkPad X1 Carbon, black, cat sticker on the lid. Left in a study carrel around 4pm.',emoji:'💻',contact:'eli@uni.edu',saved:false},
-    {id:6,user:'Faye S.',avatar:'#16a085',date:'Mar 12, 2024',title:'Student ID Card',location:'Cafeteria, Ground Floor',category:'documents',desc:'University ID from the Faculty of Engineering. Found near the tray return area.',emoji:'🪪',contact:'faye@uni.edu',saved:false},
-];
-let allItems=[...SEED], activeChip='all', currentSort='newest', currentReportType='';
+/* ── SEED DATA (always shown as base) ── */
+const SEED = [];
+let allItems = [];
+let activeChip = 'all', currentSort = 'newest', currentReportType = '';
+let pendingDeleteId = null, pendingDeleteDocId = null;
 
-/* ── AUTH ── */
-const authScreen=document.getElementById('authScreen'), homeScreen=document.getElementById('homeScreen');
-const loginView=document.getElementById('loginView'), registerView=document.getElementById('registerView');
-const regFeedback=document.getElementById('regFeedback');
+/* ── HELPERS ── */
+function catEmoji(c){return{electronics:'💻',documents:'🪪',accessories:'⌚',clothing:'👕',other:'📦'}[c]||'📦';}
+function avatarColor(uid){const cols=['#3498db','#e74c3c','#9b59b6','#f39c12','#27ae60','#16a085','#e67e22','#2980b9'];let h=0;for(let i=0;i<(uid||'').length;i++)h=(h*31+uid.charCodeAt(i))%cols.length;return cols[h];}
 
-function showLogin(){loginView.classList.add('active');registerView.classList.remove('active');regFeedback.classList.remove('show');}
-function showRegister(){loginView.classList.remove('active');registerView.classList.add('active');}
-function showAuthMsg(el,txt,err){if(!el)return;el.innerText=txt;el.style.backgroundColor=err?'#bc5a3c':'#2c5a70';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800);}
+/* ── AUTH UI ── */
+window.showLogin = function(){
+    document.getElementById('loginView').classList.add('active');
+    document.getElementById('registerView').classList.remove('active');
+};
+function showRegister(){
+    document.getElementById('loginView').classList.remove('active');
+    document.getElementById('registerView').classList.add('active');
+}
+function showAuthMsg(el,txt,err){
+    if(!el)return;
+    el.innerText=txt;
+    el.style.backgroundColor=err?'#bc5a3c':'#2c5a70';
+    el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'),3000);
+}
 
-document.getElementById('signinForm').addEventListener('submit',function(e){
+/* ── SIGN IN ── */
+document.getElementById('signinForm').addEventListener('submit', async function(e){
     e.preventDefault();
-    const u=document.getElementById('username').value.trim(), p=document.getElementById('password').value;
-    if(!u){showAuthMsg(document.getElementById('formFeedback'),'Please enter your username',true);return;}
-    if(!p){showAuthMsg(document.getElementById('formFeedback'),'Password cannot be empty',true);return;}
-    sessionStorage.setItem('uf_user',u); sessionStorage.setItem('uf_loggedin','true');
-    authScreen.classList.remove('active'); homeScreen.classList.add('active');
-    showToast(`Welcome back, ${u}!`);
+    if(!window._fb){showAuthMsg(document.getElementById('formFeedback'),'Firebase not ready yet, please wait.',true);return;}
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn = document.getElementById('signinBtn');
+    btn.disabled = true; btn.textContent = 'Signing in…';
+    try {
+        await window._fb.signInWithEmailAndPassword(window._fb.auth, email, password);
+        // onAuthStateChanged handles UI switch
+    } catch(err) {
+        const msgs = {
+            'auth/user-not-found': 'No account found with this email.',
+            'auth/wrong-password': 'Incorrect password. Please try again.',
+            'auth/invalid-email': 'Please enter a valid email address.',
+            'auth/too-many-requests': 'Too many attempts. Please try again later.',
+            'auth/invalid-credential': 'Incorrect email or password.'
+        };
+        showAuthMsg(document.getElementById('formFeedback'), msgs[err.code] || err.message, true);
+    } finally {
+        btn.disabled = false; btn.textContent = 'Sign In';
+    }
 });
 
-document.getElementById('signUpBtn').addEventListener('click',showRegister);
-document.getElementById('backBtn').addEventListener('click',showLogin);
-document.getElementById('goToLoginLink').addEventListener('click',e=>{e.preventDefault();showLogin();});
-
-document.getElementById('registerForm').addEventListener('submit',function(e){
+/* ── REGISTER ── */
+document.getElementById('registerForm').addEventListener('submit', async function(e){
     e.preventDefault();
-    const fn=document.getElementById('firstName').value.trim(), ln=document.getElementById('lastName').value.trim();
-    const em=document.getElementById('regEmail').value.trim(), si=document.getElementById('studentId').value.trim();
-    const fa=document.getElementById('faculty').value, un=document.getElementById('regUsername').value.trim();
-    const pw=document.getElementById('regPassword').value, cf=document.getElementById('confirmPassword').value;
+    if(!window._fb){showAuthMsg(document.getElementById('regFeedback'),'Firebase not ready yet.',true);return;}
+    const fn=document.getElementById('firstName').value.trim();
+    const ln=document.getElementById('lastName').value.trim();
+    const em=document.getElementById('regEmail').value.trim();
+    const si=document.getElementById('studentId').value.trim();
+    const fa=document.getElementById('faculty').value;
+    const un=document.getElementById('regUsername').value.trim();
+    const pw=document.getElementById('regPassword').value;
+    const cf=document.getElementById('confirmPassword').value;
     const tc=document.getElementById('termsCheck').checked;
-    if(!fn){showAuthMsg(regFeedback,'Please enter your first name.',true);return;}
-    if(!ln){showAuthMsg(regFeedback,'Please enter your last name.',true);return;}
-    if(!em||!em.includes('@')){showAuthMsg(regFeedback,'Please enter a valid email.',true);return;}
-    if(!si){showAuthMsg(regFeedback,'Please enter your Student/Staff ID.',true);return;}
-    if(!fa){showAuthMsg(regFeedback,'Please select your faculty.',true);return;}
-    if(!un){showAuthMsg(regFeedback,'Please choose a username.',true);return;}
-    if(pw.length<8){showAuthMsg(regFeedback,'Password must be at least 8 characters.',true);return;}
-    if(pw!==cf){showAuthMsg(regFeedback,'Passwords do not match.',true);return;}
-    if(!tc){showAuthMsg(regFeedback,'Please accept the Terms & Conditions.',true);return;}
-    showAuthMsg(regFeedback,`Account created! Welcome, ${fn}!`,false);
-    setTimeout(()=>{
-        sessionStorage.setItem('uf_user',un); sessionStorage.setItem('uf_loggedin','true');
-        authScreen.classList.remove('active'); homeScreen.classList.add('active');
-        showToast(`Welcome, ${fn}! Account created.`);
-    },1500);
+    const fb=document.getElementById('regFeedback');
+    if(!fn){showAuthMsg(fb,'Please enter your first name.',true);return;}
+    if(!ln){showAuthMsg(fb,'Please enter your last name.',true);return;}
+    if(!em||!em.includes('@')){showAuthMsg(fb,'Please enter a valid email.',true);return;}
+    if(!si){showAuthMsg(fb,'Please enter your Student/Staff ID.',true);return;}
+    if(!fa){showAuthMsg(fb,'Please select your faculty.',true);return;}
+    if(!un){showAuthMsg(fb,'Please choose a display name.',true);return;}
+    if(pw.length<8){showAuthMsg(fb,'Password must be at least 8 characters.',true);return;}
+    if(pw!==cf){showAuthMsg(fb,'Passwords do not match.',true);return;}
+    if(!tc){showAuthMsg(fb,'Please accept the Terms & Conditions.',true);return;}
+    const btn=document.getElementById('registerBtn');
+    btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Creating…';
+    try {
+        const cred = await window._fb.createUserWithEmailAndPassword(window._fb.auth, em, pw);
+        await window._fb.updateProfile(cred.user, { displayName: un });
+        // Save extra profile to Firestore
+        await window._fb.addDoc(window._fb.collection(window._fb.db,'users'),{
+            uid: cred.user.uid, firstName:fn, lastName:ln, email:em,
+            studentId:si, faculty:fa, displayName:un, createdAt: window._fb.serverTimestamp()
+        });
+        showToast(`Welcome, ${fn}! Account created. 🎉`);
+        // onAuthStateChanged handles screen switch
+    } catch(err) {
+        const msgs = {
+            'auth/email-already-in-use': 'An account already exists with this email.',
+            'auth/invalid-email': 'Please enter a valid email address.',
+            'auth/weak-password': 'Password should be at least 6 characters.'
+        };
+        showAuthMsg(document.getElementById('regFeedback'), msgs[err.code] || err.message, true);
+    } finally {
+        btn.disabled=false; btn.innerHTML='<i class="fas fa-user-plus"></i> Create Account';
+    }
 });
 
-document.getElementById('forgotPasswordLink').addEventListener('click',e=>{
+/* ── FORGOT PASSWORD ── */
+document.getElementById('forgotPasswordLink').addEventListener('click', async function(e){
     e.preventDefault();
-    const u=document.getElementById('username').value.trim();
-    showAuthMsg(document.getElementById('formFeedback'),u?`Reset link sent for "${u}" (demo)`:'Enter your username first.',!u);
+    if(!window._fb) return;
+    const email = document.getElementById('loginEmail').value.trim();
+    if(!email){showAuthMsg(document.getElementById('formFeedback'),'Enter your email first.',true);return;}
+    try {
+        await window._fb.sendPasswordResetEmail(window._fb.auth, email);
+        showAuthMsg(document.getElementById('formFeedback'),`Reset link sent to ${email}!`,false);
+    } catch(err) {
+        showAuthMsg(document.getElementById('formFeedback'), err.message, true);
+    }
 });
-document.querySelectorAll('.help-link-item').forEach(l=>{
-    l.addEventListener('click',e=>{e.preventDefault();showAuthMsg(document.getElementById('formFeedback'),`${l.dataset.help} – coming soon`,false);});
-});
+
+document.getElementById('signUpBtn').addEventListener('click', showRegister);
+document.getElementById('backBtn').addEventListener('click', window.showLogin);
+document.getElementById('goToLoginLink').addEventListener('click', e=>{e.preventDefault();window.showLogin();});
+
+/* ── PASSWORD STRENGTH ── */
 document.getElementById('regPassword').addEventListener('input',function(){
     const v=this.value; let s=0;
     if(v.length>=8)s++; if(/[A-Z]/.test(v))s++; if(/[0-9]/.test(v))s++; if(/[^A-Za-z0-9]/.test(v))s++;
     const L=[{w:'0%',b:'transparent',l:''},{w:'25%',b:'#e05252',l:'Weak'},{w:'50%',b:'#e2b13b',l:'Fair'},{w:'75%',b:'#4fb3d4',l:'Good'},{w:'100%',b:'#4caf7d',l:'Strong'}];
-    document.getElementById('strengthBar').style.width=L[s].w; document.getElementById('strengthBar').style.background=L[s].b;
-    document.getElementById('strengthLabel').textContent=L[s].l; document.getElementById('strengthLabel').style.color=L[s].b;
+    document.getElementById('strengthBar').style.width=L[s].w;
+    document.getElementById('strengthBar').style.background=L[s].b;
+    document.getElementById('strengthLabel').textContent=L[s].l;
+    document.getElementById('strengthLabel').style.color=L[s].b;
 });
-if(sessionStorage.getItem('uf_loggedin')==='true'){authScreen.classList.remove('active');homeScreen.classList.add('active');}
 
-/* ── SIGN OUT MODAL ── */
+/* ── SIGN OUT ── */
 function openSignOutModal(){
-    // reset to initial state
     document.getElementById('soSpinner').classList.remove('on');
     document.getElementById('soBtnRow').style.display='';
     document.getElementById('soLeaveBtn').disabled=false;
     document.getElementById('soLeaveBtn').innerHTML='<i class="fas fa-sign-out-alt"></i> Sign Out';
-    // show current user
-    const u=sessionStorage.getItem('uf_user')||'User';
-    document.getElementById('soUsername').textContent=u;
+    const name = window._currentUser?.displayName || window._currentUser?.email || 'User';
+    document.getElementById('soUsername').textContent = name;
     document.getElementById('signOutModal').classList.add('active');
 }
 function closeSignOutModal(){document.getElementById('signOutModal').classList.remove('active');}
-function doSignOut(){
+async function doSignOut(){
     const leaveBtn=document.getElementById('soLeaveBtn');
     const stayBtn=document.getElementById('soStayBtn');
-    // disable both buttons, show spinner
     leaveBtn.disabled=true;
     leaveBtn.innerHTML='<i class="fas fa-sign-out-alt"></i> Signing out…';
     stayBtn.style.opacity='0.4'; stayBtn.style.pointerEvents='none';
     document.getElementById('soSpinner').classList.add('on');
-    setTimeout(()=>{
-        sessionStorage.clear();
+    try {
+        await window._fb.signOut(window._fb.auth);
+        allItems = [...SEED];
         closeSignOutModal();
-        homeScreen.classList.remove('active');
-        authScreen.classList.add('active');
-        goHome(); showLogin();
-        setTimeout(()=>showToast('Signed out successfully. See you soon! 👋'),150);
-    },1500);
+        goHome();
+    } catch(e) { showToast('Sign out failed. Try again.','error'); }
+    stayBtn.style.opacity=''; stayBtn.style.pointerEvents='';
 }
 document.getElementById('signOutModal').addEventListener('click',e=>{if(e.target===document.getElementById('signOutModal'))closeSignOutModal();});
 
 /* ── NAV ── */
 function setActive(el){document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));el.classList.add('active');}
-function goHome(){document.getElementById('homeContent').style.display='';document.getElementById('lostContent').style.display='none';document.getElementById('navHome').classList.add('active');}
-function goLost(){
+function goHome(){
+    document.getElementById('homeContent').style.display='';
+    document.getElementById('lostContent').style.display='none';
+    document.getElementById('navHome').classList.add('active');
+}
+
+async function goLost(){
     document.getElementById('homeContent').style.display='none';
     document.getElementById('lostContent').style.display='';
     document.getElementById('navLost').classList.add('active');
-    const stored=JSON.parse(localStorage.getItem('reports')||'[]').filter(r=>r.type==='lost');
-    stored.forEach(r=>{
-        if(!allItems.find(i=>i.id===r.id)){
-            allItems.unshift({id:r.id,user:sessionStorage.getItem('uf_user')||'You',avatar:'#e74c3c',date:r.date||'Recently',title:r.itemName,location:r.location,category:r.category,desc:r.description||'',emoji:catEmoji(r.category),contact:r.contact,saved:false});
-        }
-    });
+    await loadFirestoreItems();
     renderLostCards();
 }
-function catEmoji(c){return{electronics:'💻',documents:'🪪',accessories:'⌚',clothing:'👕',other:'📦'}[c]||'📦';}
 
-/* ── LOST PAGE ── */
+/* ── FIRESTORE: LOAD ITEMS ── */
+async function loadFirestoreItems(){
+    if(!window._fb) return;
+    try {
+        const q = window._fb.query(
+            window._fb.collection(window._fb.db,'lostItems'),
+            window._fb.orderBy('createdAt','desc')
+        );
+        const snap = await window._fb.getDocs(q);
+        const firestoreItems = snap.docs.map(d => {
+            const data = d.data();
+            return {
+                id: d.id,
+                docId: d.id,
+                user: data.displayName || 'Anonymous',
+                avatar: avatarColor(data.uid),
+                date: data.createdAt?.toDate?.()?.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) || 'Recently',
+                title: data.itemName,
+                location: data.location,
+                category: data.category,
+                desc: data.description || '',
+                emoji: catEmoji(data.category),
+                contact: data.contact,
+                saved: false,
+                owner: data.uid
+            };
+        });
+        // Merge: seed + firestore (avoid duplicates by id)
+        const seedIds = new Set(SEED.map(s=>s.id));
+        allItems = [...firestoreItems, ...SEED];
+    } catch(err){
+        console.error('Firestore load error:', err);
+        showToast('Could not load items from database.','error');
+        allItems = [...SEED];
+    }
+}
+
+/* ── LOST PAGE RENDER ── */
 function setChip(el,cat){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');activeChip=cat;renderLostCards();}
 function filterLostCards(){renderLostCards();}
 function sortCards(v){currentSort=v;renderLostCards();}
+
+function isOwner(item){
+    const uid = window._currentUser?.uid || '';
+    return uid && item.owner === uid;
+}
+
 function renderLostCards(){
     const q=(document.getElementById('lostSearchInput').value||'').toLowerCase();
     let items=[...allItems];
@@ -618,17 +791,24 @@ function renderLostCards(){
     else if(currentSort==='oldest') items.reverse();
     const grid=document.getElementById('lostGrid'), empty=document.getElementById('emptyState'), count=document.getElementById('resultsCount');
     if(!items.length){grid.innerHTML='';empty.style.display='';count.textContent='No items found';return;}
-    empty.style.display='none'; count.textContent=`Showing ${items.length} item${items.length!==1?'s':''}`;
-    grid.innerHTML=items.map((item,idx)=>`
-        <div class="item-card" style="animation-delay:${idx*0.07}s">
+    empty.style.display='none';
+    count.textContent=`Showing ${items.length} item${items.length!==1?'s':''}`;
+    grid.innerHTML=items.map((item,idx)=>{
+        const mine=isOwner(item);
+        return `
+        <div class="item-card" id="item-card-${item.id}" style="animation-delay:${idx*0.07}s">
             <div class="card-head">
-                <div class="avatar" style="background:${item.avatar}">${item.user[0]}</div>
-                <div class="card-meta"><div class="uname">${item.user}</div><div class="udate">${item.date}</div></div>
+                <div class="avatar" style="background:${item.avatar}">${item.user[0].toUpperCase()}</div>
+                <div class="card-meta">
+                    <div class="uname">${item.user}</div>
+                    <div class="udate">${item.date}</div>
+                </div>
+                ${mine?'<span class="owner-badge">✦ Mine</span>':''}
             </div>
             <div class="carousel" id="car-${item.id}">
                 <div class="carousel-slide" style="font-size:4rem;">${item.emoji}</div>
-                <button class="car-btn prev" onclick="carPrev(${item.id})">&#8249;</button>
-                <button class="car-btn next" onclick="carNext(${item.id})">&#8250;</button>
+                <button class="car-btn prev" onclick="carPrev('${item.id}')">&#8249;</button>
+                <button class="car-btn next" onclick="carNext('${item.id}')">&#8250;</button>
                 <div class="carousel-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
             </div>
             <div class="card-body">
@@ -638,16 +818,22 @@ function renderLostCards(){
                 <p class="card-desc">${item.desc}</p>
             </div>
             <div class="card-foot">
-                <button class="btn-save ${item.saved?'saved':''}" onclick="toggleSave(${item.id},this)">${item.saved?'❤️':'🤍'}</button>
-                <button class="btn-contact" onclick="showContact(${item.id})">Contact</button>
+                <button class="btn-save ${item.saved?'saved':''}" onclick="toggleSave('${item.id}',this)">${item.saved?'❤️':'🤍'}</button>
+                <div class="card-foot-actions">
+                    <button class="btn-contact" onclick="showContact('${item.id}')">Contact</button>
+                    ${mine?`<button class="btn-delete-card" onclick="openDeleteModal('${item.id}','${item.docId||item.id}')"><i class="fas fa-trash-alt"></i> Delete</button>`:''}
+                </div>
             </div>
-        </div>`).join('');
+        </div>`;
+    }).join('');
 }
+
+/* ── CAROUSEL ── */
 const carStates={};
 function carNext(id){carStates[id]=((carStates[id]||0)+1)%3;updateCarousel(id);}
 function carPrev(id){carStates[id]=((carStates[id]||0)+2)%3;updateCarousel(id);}
 function updateCarousel(id){
-    const item=allItems.find(i=>i.id===id); if(!item)return;
+    const item=allItems.find(i=>i.id==id); if(!item)return;
     const car=document.getElementById(`car-${id}`); if(!car)return;
     const idx=carStates[id]||0;
     const slides=[
@@ -655,20 +841,52 @@ function updateCarousel(id){
         `<div class="carousel-slide" style="background:#dde;font-size:0.85rem;color:#999;flex-direction:column;gap:4px;display:flex;align-items:center;justify-content:center;">📷<span>No image 2</span></div>`,
         `<div class="carousel-slide" style="background:#eed;font-size:0.85rem;color:#999;flex-direction:column;gap:4px;display:flex;align-items:center;justify-content:center;">📷<span>No image 3</span></div>`
     ];
-    car.querySelector('.carousel-slide').outerHTML=slides[idx];
-    car.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+    car.innerHTML=slides[idx]+`<button class="car-btn prev" onclick="carPrev('${id}')">&#8249;</button><button class="car-btn next" onclick="carNext('${id}')">&#8250;</button><div class="carousel-dots">${[0,1,2].map(i=>`<div class="dot${i===idx?' active':''}"></div>`).join('')}</div>`;
 }
+
 function toggleSave(id,btn){
-    const item=allItems.find(i=>i.id===id);if(!item)return;
-    item.saved=!item.saved; btn.classList.toggle('saved',item.saved); btn.textContent=item.saved?'❤️':'🤍';
+    const item=allItems.find(i=>i.id==id);if(!item)return;
+    item.saved=!item.saved;btn.classList.toggle('saved',item.saved);btn.textContent=item.saved?'❤️':'🤍';
     showToast(item.saved?'Item saved!':'Removed from saved.');
 }
 function showContact(id){
-    const item=allItems.find(i=>i.id===id);if(!item)return;
+    const item=allItems.find(i=>i.id==id);if(!item)return;
     document.getElementById('contactModalBody').innerHTML=`<p><strong>Item:</strong> ${item.title}</p><p><strong>Reported by:</strong> ${item.user}</p><p><strong>Contact:</strong> ${item.contact}</p><p style="margin-top:0.8rem;font-size:0.78rem;color:#aaa;">Please reach out respectfully. UniFound does not mediate disputes.</p>`;
     document.getElementById('contactModal').classList.add('active');
 }
 function closeContactModal(){document.getElementById('contactModal').classList.remove('active');}
+
+/* ── DELETE ── */
+function openDeleteModal(id, docId){
+    const item=allItems.find(i=>i.id==id);if(!item)return;
+    pendingDeleteId=id; pendingDeleteDocId=docId;
+    document.getElementById('delItemName').textContent=item.title;
+    document.getElementById('delConfirmBtn').disabled=false;
+    document.getElementById('delConfirmBtn').innerHTML='<i class="fas fa-trash-alt"></i> Delete';
+    document.getElementById('deleteModal').classList.add('active');
+}
+function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('active');pendingDeleteId=null;pendingDeleteDocId=null;}
+async function confirmDelete(){
+    if(pendingDeleteId===null)return;
+    const id=pendingDeleteId, docId=pendingDeleteDocId;
+    const btn=document.getElementById('delConfirmBtn');
+    btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Deleting…';
+    try {
+        // Delete from Firestore if it has a real doc ID (not a seed)
+        if(window._fb && docId && !String(docId).startsWith('seed')){
+            await window._fb.deleteDoc(window._fb.doc(window._fb.db,'lostItems',docId));
+        }
+        const cardEl=document.getElementById(`item-card-${id}`);
+        if(cardEl){ cardEl.classList.add('deleting'); await new Promise(r=>setTimeout(r,350)); }
+        allItems=allItems.filter(i=>i.id!=id);
+        closeDeleteModal(); renderLostCards();
+        showToast('🗑️ Report deleted successfully.','error');
+    } catch(err){
+        showToast('Delete failed: '+err.message,'error');
+        btn.disabled=false; btn.innerHTML='<i class="fas fa-trash-alt"></i> Delete';
+    }
+}
+document.getElementById('deleteModal').addEventListener('click',e=>{if(e.target===document.getElementById('deleteModal'))closeDeleteModal();});
 
 /* ── REPORT MODAL ── */
 function openModal(type){
@@ -680,26 +898,56 @@ function openModal(type){
     const di=document.getElementById('date'); if(di)di.valueAsDate=new Date();
 }
 function closeModal(){document.getElementById('reportModal').classList.remove('active');document.getElementById('reportForm').reset();}
-function handleSubmit(e){
+
+async function handleSubmit(e){
     e.preventDefault();
-    const data={id:Date.now(),type:currentReportType,itemName:document.getElementById('itemName').value,category:document.getElementById('category').value,location:document.getElementById('location').value,date:document.getElementById('date').value,description:document.getElementById('description').value,contact:document.getElementById('contact').value};
-    const btn=e.target.querySelector('.submit-btn'); btn.textContent='Submitting…'; btn.disabled=true;
-    setTimeout(()=>{
-        const reports=JSON.parse(localStorage.getItem('reports')||'[]'); reports.push(data); localStorage.setItem('reports',JSON.stringify(reports));
-        if(data.type==='lost') allItems.unshift({id:data.id,user:sessionStorage.getItem('uf_user')||'You',avatar:'#e74c3c',date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),title:data.itemName,location:data.location,category:data.category,desc:data.description||'',emoji:catEmoji(data.category),contact:data.contact,saved:false});
+    if(!window._currentUser){showToast('Please sign in to report items.','error');return;}
+    const btn=document.getElementById('submitReportBtn');
+    btn.textContent='Submitting…'; btn.disabled=true;
+    const data={
+        type: currentReportType,
+        itemName: document.getElementById('itemName').value,
+        category: document.getElementById('category').value,
+        location: document.getElementById('location').value,
+        date: document.getElementById('date').value,
+        description: document.getElementById('description').value,
+        contact: document.getElementById('contact').value,
+        uid: window._currentUser.uid,
+        displayName: window._currentUser.displayName || window._currentUser.email,
+        createdAt: window._fb.serverTimestamp()
+    };
+    try {
+        const collectionName = data.type==='lost' ? 'lostItems' : 'foundItems';
+        const docRef = await window._fb.addDoc(window._fb.collection(window._fb.db, collectionName), data);
+        if(data.type==='lost'){
+            allItems.unshift({
+                id: docRef.id, docId: docRef.id,
+                user: data.displayName,
+                avatar: avatarColor(data.uid),
+                date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),
+                title: data.itemName, location: data.location, category: data.category,
+                desc: data.description||'', emoji: catEmoji(data.category),
+                contact: data.contact, saved: false, owner: data.uid
+            });
+        }
         btn.textContent='Submit Report'; btn.disabled=false;
         closeModal();
-        showToast(data.type==='lost'?'✅ Lost item reported!':'✅ Found item reported! Thank you.');
+        showToast(data.type==='lost'?'✅ Lost item saved to database!':'✅ Found item saved! Thank you.');
         createConfetti();
         if(document.getElementById('lostContent').style.display!=='none') renderLostCards();
-    },900);
+    } catch(err){
+        showToast('Submit failed: '+err.message,'error');
+        btn.textContent='Submit Report'; btn.disabled=false;
+    }
 }
 
 /* ── TOAST ── */
 function showToast(msg,type='success'){
     const t=document.getElementById('toast');if(!t)return;
-    t.className=`toast ${type}`; document.getElementById('toastIcon').textContent=type==='success'?'✓':'✕'; document.getElementById('toastMessage').textContent=msg;
-    t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);
+    t.className=`toast ${type}`;
+    document.getElementById('toastIcon').textContent=type==='success'?'✓':'✕';
+    document.getElementById('toastMessage').textContent=msg;
+    t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3500);
 }
 
 /* ── CONFETTI ── */
@@ -722,10 +970,10 @@ document.addEventListener('mousemove',e=>{
     });
 });
 
-/* ── OUTSIDE CLICK CLOSE ── */
+/* ── ESC / OUTSIDE CLICK ── */
 document.getElementById('reportModal').addEventListener('click',e=>{if(e.target===document.getElementById('reportModal'))closeModal();});
 document.getElementById('contactModal').addEventListener('click',e=>{if(e.target===document.getElementById('contactModal'))closeContactModal();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeContactModal();closeSignOutModal();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeContactModal();closeSignOutModal();closeDeleteModal();}});
 </script>
 </body>
 </html>
