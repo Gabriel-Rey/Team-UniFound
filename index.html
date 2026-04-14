@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>UniFound - Lost and Found Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ AUTH SCREEN ══════════════════════════════════════════ -->
+<div id="authScreen" class="screen">
+    <div class="auth-container">
+        <div class="page-wrapper">
+            <div class="main-title">
+                <div class="brand-icon"><i class="fas fa-search-location"></i></div>
+                <div class="brand-text">
+                    <span class="brand-name">UniFound</span>
+                    <span class="brand-tagline">Lost &amp; Found Portal</span>
+                </div>
+            </div>
+
+            <!-- LOGIN VIEW -->
+            <div id="loginView" class="view active">
+                <div class="card">
+                    <div class="form-section">
+                        <div class="login-title">Login</div>
+                        <div class="login-sub">Sign in to access your lost &amp; found dashboard</div>
+                        <form id="signinForm">
+                            <div class="input-group">
+                                <label><i class="far fa-user-circle"></i> Email</label>
+                                <div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="loginEmail" placeholder="your@email.com" required></div>
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-lock"></i> Password</label>
+                                <div class="input-wrapper"><i class="fas fa-key"></i><input type="password" id="loginPassword" placeholder="••••••••" required></div>
+                            </div>
+                            <div class="forgot-link"><a href="#" id="forgotPasswordLink">Forgot Password?</a></div>
+                            <div class="button-group">
+                                <button type="submit" class="btn btn-signin" id="signinBtn">Sign In</button>
+                                <button type="button" class="btn btn-signup" id="signUpBtn">Sign Up</button>
+                            </div>
+                            <div id="formFeedback" class="toast-msg"></div>
+                        </form>
+                    </div>
+                    <div class="help-row">
+                        <a href="#"><i class="fas fa-headset"></i> Support</a>
+                        <a href="#"><i class="fas fa-file-contract"></i> Terms</a>
+                        <a href="#"><i class="fas fa-shield-alt"></i> Privacy</a>
+                    </div>
+                    <div class="contact-strip">
+                        <a href="tel:+94716520890"><i class="fas fa-phone-alt"></i> +94 716520890</a>
+                        <a href="/cdn-cgi/l/email-protection#ca9fa4a38ca5bfa4ae8aada7aba3a6e4a9a5a7"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="95c0fbfcd3fae0fbf1d5f2f8f4fcf9bbf6faf8">[email&#160;protected]</span></a>
+                    </div>
+                    <div class="copyright">© Copyright 2026 UniFound — Lost &amp; Found Portal. All Rights Reserved.</div>
+                </div>
+            </div>
+
+            <!-- REGISTER VIEW -->
+            <div id="registerView" class="view reg-view">
+                <div class="card">
+                    <div class="reg-header">
+                        <div class="reg-header-title"><i class="fas fa-user-plus" style="margin-right:10px;color:#e2b13b;"></i>Create Account</div>
+                        <div class="reg-header-sub">Join UniFound and start reporting lost &amp; found items on campus</div>
+                    </div>
+                    <div class="reg-body">
+                        <form id="registerForm">
+                            <div class="section-label">Personal Information</div>
+                            <div class="form-row">
+                                <div class="input-group"><label>First Name</label><div class="input-wrapper"><i class="fas fa-id-badge"></i><input type="text" id="firstName" placeholder="e.g. John" required></div></div>
+                                <div class="input-group"><label>Last Name</label><div class="input-wrapper"><i class="fas fa-id-badge"></i><input type="text" id="lastName" placeholder="e.g. Doe" required></div></div>
+                            </div>
+                            <div class="input-group"><label>University Email</label><div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="student@university.edu" required></div></div>
+                            <div class="form-row">
+                                <div class="input-group"><label>Student / Staff ID</label><div class="input-wrapper"><i class="fas fa-hashtag"></i><input type="text" id="studentId" placeholder="e.g. 20210001" required></div></div>
+                                <div class="input-group"><label>Faculty / Department</label><div class="input-wrapper"><i class="fas fa-university"></i>
+                                    <select id="faculty" required>
+                                        <option value="" disabled selected>Select your faculty</option>
+                                        <option>Faculty of Computing</option>
+                                        <option>Faculty of Engineering</option>
+                                        <option>Faculty of Business</option>
+                                        <option>Faculty of Science</option>
+                                        <option>Faculty of Arts</option>
+                                        <option>Faculty of Medicine</option>
+                                        <option>Administrative Staff</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div></div>
+                            </div>
+                            <div class="section-label">Account Credentials</div>
+                            <div class="input-group"><label>Display Name / Username</label><div class="input-wrapper"><i class="fas fa-user-circle"></i><input type="text" id="regUsername" placeholder="Choose a display name" required></div></div>
+                            <div class="input-group">
+                                <label>Password</label>
+                                <div class="input-wrapper"><i class="fas fa-key"></i><input type="password" id="regPassword" placeholder="Min. 8 characters" required></div>
+                                <div class="strength-bar-wrap"><div class="strength-bar" id="strengthBar"></div></div>
+                                <div class="strength-label" id="strengthLabel"></div>
+                            </div>
+                            <div class="input-group"><label>Confirm Password</label><div class="input-wrapper"><i class="fas fa-check-circle"></i><input type="password" id="confirmPassword" placeholder="Re-enter your password" required></div></div>
+                            <div class="terms-row">
+                                <input type="checkbox" id="termsCheck">
+                                <label for="termsCheck">I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> of UniFound.</label>
+                            </div>
+                            <div class="btn-row">
+                                <button type="button" class="btn btn-back" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
+                                <button type="submit" class="btn btn-register" id="registerBtn"><i class="fas fa-user-plus"></i> Create Account</button>
+                            </div>
+                            <div id="regFeedback" class="toast-msg"></div>
+                        </form>
+                        <div class="back-to-login">Already have an account? <a href="#" id="goToLoginLink">Sign in here</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════ HOME SCREEN ══════════════════════════════════════════ -->
+<div id="homeScreen" class="screen">
+    <div class="home-container">
+
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="logo" onclick="goHome()"><div class="logo-icon">📦</div><span>UniFound</span></div>
+            <ul class="nav-links">
+                <li><a href="#" id="navHome" onclick="goHome();setActive(this)" class="active">Home</a></li>
+                <li><a href="#" id="navLost" onclick="goLost();setActive(this)">Lost</a></li>
+                <li><a href="#" onclick="openModal('lost');setActive(this)">Report Lost</a></li>
+                <li><a href="#" onclick="showToast('Found Items – coming soon!');setActive(this)">Found</a></li>
+                <li><a href="#" onclick="openModal('found');setActive(this)">Report Found</a></li>
+                <li><a href="#" onclick="showToast('Profile – coming soon!');setActive(this)">Profile</a></li>
+            </ul>
+            <button class="btn-signout" onclick="openSignOutModal()">Sign Out</button>
+        </nav>
+
+        <!-- HOME CONTENT -->
+        <div id="homeContent">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Find &amp;<br>Recover<br><span class="highlight-green">With</span> <span class="highlight-red">Ease</span></h1>
+                    <p class="hero-subtitle">Experience effortless recovery with our dedicated lost and found service. We connect people with their belongings through our community-driven platform.</p>
+                    <div class="hero-actions">
+                        <button class="action-btn btn-lost" onclick="openModal('lost')"><span class="btn-icon">📝</span><span>Lost</span></button>
+                        <button class="action-btn btn-found" onclick="openModal('found')"><span class="btn-icon">🔍</span><span>Found</span></button>
+                    </div>
+                </div>
+                <div class="hero-images">
+                    <div class="image-stack">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop" alt="" class="hero-img img-1">
+                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=300&fit=crop" alt="" class="hero-img img-2">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop" alt="" class="hero-img img-3">
+                    </div>
+                </div>
+            </section>
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li><li><a>Found</a></li><li><a onclick="openModal('found')">Report Found</a></li></ul></div>
+                    <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Support</a></li><li><a href="#">Terms &amp; Conditions</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+                    <div class="footer-section"><h3>Links</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">About Us</a></li></ul></div>
+                    <div class="footer-section"><h3>Contact</h3><p style="color:var(--light);margin-bottom:0.5rem;">Tel: +94 716520690<br>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="53063d3a153c263d3713343e323a3f7d303c3e">[email&#160;protected]</a></p><div class="social-links"><a href="#">🐦</a><a href="#">📘</a><a href="#">📷</a><a href="#">🐙</a></div></div>
+                </div>
+                <div class="footer-bottom"><p>© Copyright 2026 Lost and Found. All Right Reserved</p></div>
+            </footer>
+        </div>
+
+        <!-- LOST CONTENT -->
+        <div id="lostContent" style="display:none;">
+            <div class="lost-page">
+                <div class="lost-hero">
+                    <h1>Lost <span>Items</span></h1>
+                    <div class="search-report-row">
+                        <div class="search-box"><i class="fas fa-search"></i><input type="text" id="lostSearchInput" placeholder="Search item name, location…" oninput="filterLostCards()"></div>
+                        <button class="btn-report-lost" onclick="openModal('lost')"><i class="fas fa-plus"></i> Report Lost</button>
+                    </div>
+                    <div class="filter-row">
+                        <div class="chip active" onclick="setChip(this,'all')">All</div>
+                        <div class="chip" onclick="setChip(this,'electronics')">Electronics</div>
+                        <div class="chip" onclick="setChip(this,'accessories')">Accessories</div>
+                        <div class="chip" onclick="setChip(this,'documents')">Documents</div>
+                        <div class="chip" onclick="setChip(this,'clothing')">Clothing</div>
+                        <div class="chip" onclick="setChip(this,'other')">Other</div>
+                    </div>
+                </div>
+                <div class="lost-main">
+                    <div class="results-meta">
+                        <span id="resultsCount">Loading items…</span>
+                        <select class="sort-select" onchange="sortCards(this.value)">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="alpha">A → Z</option>
+                        </select>
+                    </div>
+                    <div class="items-grid" id="lostGrid"></div>
+                    <div class="empty-state" id="emptyState" style="display:none;"><div class="emo">🔍</div><p>No lost items match your search.</p></div>
+                </div>
+                <footer class="footer">
+                    <div class="footer-content">
+                        <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li></ul></div>
+                        <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Support</a></li><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+                        <div class="footer-section"><h3>Links</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Facebook</a></li></ul></div>
+                        <div class="footer-section"><h3>Contact</h3><p style="color:var(--light);">Tel: +94 716520690<br>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="87d2e9eec1e8f2e9e3c7e0eae6eeeba9e4e8ea">[email&#160;protected]</a></p></div>
+                    </div>
+                    <div class="footer-bottom"><p>© Copyright 2026 Lost and Found. All Right Reserved</p></div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGN OUT MODAL -->
+    <div id="signOutModal" class="modal">
+        <div class="modal-content so-modal-inner">
+            <span class="so-emoji">👋</span>
+            <h3>Leaving so soon?</h3>
+            <div class="so-user-badge" id="soUserBadge"><i class="fas fa-user-circle"></i> <span id="soUsername">User</span></div>
+            <p>Are you sure you want to sign out of your UniFound account?</p>
+            <div class="so-btn-row" id="soBtnRow">
+                <button class="so-stay" id="soStayBtn" onclick="closeSignOutModal()">Stay In</button>
+                <button class="so-leave" id="soLeaveBtn" onclick="doSignOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+            </div>
+            <div class="so-spinner-wrap" id="soSpinner">
+                <div class="so-spin"></div>
+                <span class="so-spin-txt">Signing you out…</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE MODAL -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content del-modal-inner">
+            <span class="del-emoji">🗑️</span>
+            <h3>Delete this report?</h3>
+            <div class="del-item-name" id="delItemName">Item Name</div>
+            <p>This will permanently remove the lost item report from the database. This action cannot be undone.</p>
+            <div class="del-btn-row">
+                <button class="del-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button class="del-confirm" id="delConfirmBtn" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i> Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- REPORT MODAL -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Report Item</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="reportForm" onsubmit="handleSubmit(event)">
+                <div class="form-group"><label>Item Name</label><input type="text" id="itemName" required placeholder="e.g., Black Wallet"></div>
+                <div class="form-group"><label>Category</label>
+                    <select id="category" required>
+                        <option value="">Select Category</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="documents">Documents</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Location</label><input type="text" id="location" required placeholder="e.g., Library 2nd Floor"></div>
+                <div class="form-group"><label>Date</label><input type="date" id="date" required></div>
+                <div class="form-group"><label>Description</label><textarea id="description" rows="3" placeholder="Add details about the item..."></textarea></div>
+                <div class="form-group"><label>Contact Info</label><input type="text" id="contact" required placeholder="Email or Phone"></div>
+                <button type="submit" class="submit-btn" id="submitReportBtn">Submit Report</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONTACT MODAL -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content" style="max-width:380px;">
+            <div class="modal-header">
+                <h2 class="modal-title">Contact Reporter</h2>
+                <button class="close-btn" onclick="closeContactModal()">&times;</button>
+            </div>
+            <div id="contactModalBody" style="font-size:0.9rem;color:#555;line-height:1.8;"></div>
+            <button class="submit-btn" style="margin-top:1.2rem;" onclick="closeContactModal()">Close</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"><span id="toastIcon">✓</span><span id="toastMessage">Done!</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════ FIREBASE (module) ══════════════════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAKgg3rZqij46ZdxKwWJNhT2GfL7b527Ks",
+        authDomain: "unifound-3beef.firebaseapp.com",
+        projectId: "unifound-3beef",
+        storageBucket: "unifound-3beef.firebasestorage.app",
+        messagingSenderId: "108359136392",
+        appId: "1:108359136392:web:2953171b97e32a4a649b3d",
+        measurementId: "G-71DTPDTNSF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Expose to global scope so script.js can access Firebase
+    window._fb = {
+        auth, db,
+        createUserWithEmailAndPassword, signInWithEmailAndPassword,
+        signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail,
+        collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp
+    };
+
+    // Auth state listener
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            window._currentUser = user;
+            document.getElementById('authScreen').classList.remove('active');
+            document.getElementById('homeScreen').classList.add('active');
+        } else {
+            window._currentUser = null;
+            document.getElementById('authScreen').classList.add('active');
+            document.getElementById('homeScreen').classList.remove('active');
+        }
+    });
+</script>
+<script src="script.js"></script>
+</body>
+</html>
