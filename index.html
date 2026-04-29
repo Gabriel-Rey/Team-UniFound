@@ -262,6 +262,21 @@
                 <div class="form-group"><label>Date</label><input type="date" id="date" required></div>
                 <div class="form-group"><label>Description</label><textarea id="description" rows="3" placeholder="Add details about the item..."></textarea></div>
                 <div class="form-group"><label>Contact Info</label><input type="text" id="contact" required placeholder="Email or Phone"></div>
+                <div class="form-group">
+                    <label>Photo <span style="font-weight:400;color:#aaa;font-size:0.8rem;">(optional)</span></label>
+                    <div class="photo-upload-area" id="photoUploadArea" onclick="document.getElementById('itemPhoto').click()">
+                        <input type="file" id="itemPhoto" accept="image/*" style="display:none;" onchange="handlePhotoSelect(event)">
+                        <div class="photo-upload-placeholder" id="photoPlaceholder">
+                            <i class="fas fa-camera" style="font-size:1.6rem;color:#ccc;"></i>
+                            <span>Click to upload a photo</span>
+                            <span style="font-size:0.75rem;color:#bbb;">JPG, PNG, GIF up to 5MB</span>
+                        </div>
+                        <div class="photo-preview-wrap" id="photoPreviewWrap" style="display:none;">
+                            <img id="photoPreview" src="" alt="Preview" class="photo-preview-img">
+                            <button type="button" class="photo-remove-btn" onclick="removePhoto(event)" title="Remove photo"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
                 <button type="submit" class="submit-btn" id="submitReportBtn">Submit Report</button>
             </form>
         </div>
