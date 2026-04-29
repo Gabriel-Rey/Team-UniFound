@@ -338,7 +338,37 @@ function openModal(type) {
     document.getElementById('reportModal').classList.add('active');
     const di = document.getElementById('date'); if (di) di.valueAsDate = new Date();
 }
-function closeModal() { document.getElementById('reportModal').classList.remove('active'); document.getElementById('reportForm').reset(); }
+function closeModal() {
+    document.getElementById('reportModal').classList.remove('active');
+    document.getElementById('reportForm').reset();
+    removePhoto();
+}
+
+/* ── PHOTO UPLOAD ── */
+window._selectedPhotoBase64 = null;
+
+window.handlePhotoSelect = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { showToast('Photo must be under 5MB.', 'error'); return; }
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+        window._selectedPhotoBase64 = ev.target.result;
+        document.getElementById('photoPreview').src = ev.target.result;
+        document.getElementById('photoPlaceholder').style.display = 'none';
+        document.getElementById('photoPreviewWrap').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+};
+
+window.removePhoto = function(e) {
+    if (e) e.stopPropagation();
+    window._selectedPhotoBase64 = null;
+    document.getElementById('itemPhoto').value = '';
+    document.getElementById('photoPreview').src = '';
+    document.getElementById('photoPlaceholder').style.display = 'flex';
+    document.getElementById('photoPreviewWrap').style.display = 'none';
+};
 
 async function handleSubmit(e) {
     e.preventDefault();
@@ -355,7 +385,8 @@ async function handleSubmit(e) {
         contact: document.getElementById('contact').value,
         uid: window._currentUser.uid,
         displayName: window._currentUser.displayName || window._currentUser.email,
-        createdAt: window._fb.serverTimestamp()
+        createdAt: window._fb.serverTimestamp(),
+        photoBase64: window._selectedPhotoBase64 || null
     };
     try {
         const collectionName = data.type === 'lost' ? 'lostItems' : 'foundItems';
@@ -368,7 +399,8 @@ async function handleSubmit(e) {
                 date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                 title: data.itemName, location: data.location, category: data.category,
                 desc: data.description || '', emoji: catEmoji(data.category),
-                contact: data.contact, saved: false, owner: data.uid
+                contact: data.contact, saved: false, owner: data.uid,
+                photoBase64: data.photoBase64 || null
             });
         }
         btn.textContent = 'Submit Report'; btn.disabled = false;
