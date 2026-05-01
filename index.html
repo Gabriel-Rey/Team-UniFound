@@ -127,9 +127,9 @@
                 <li><a href="#" id="navHome" onclick="goHome();setActive(this)" class="active">Home</a></li>
                 <li><a href="#" id="navLost" onclick="goLost();setActive(this)">Lost</a></li>
                 <li><a href="#" onclick="openModal('lost');setActive(this)">Report Lost</a></li>
-                <li><a href="#" onclick="showToast('Found Items – coming soon!');setActive(this)">Found</a></li>
+                <li><a href="#" id="navFound" onclick="goFound();setActive(this)">Found</a></li>
                 <li><a href="#" onclick="openModal('found');setActive(this)">Report Found</a></li>
-                <li><a href="#" onclick="showToast('Profile – coming soon!');setActive(this)">Profile</a></li>
+                <li><a href="#" id="navProfile" onclick="goProfile();setActive(this)">Profile</a></li>
             </ul>
             <button class="btn-signout" onclick="openSignOutModal()">Sign Out</button>
         </nav>
@@ -155,7 +155,7 @@
             </section>
             <footer class="footer">
                 <div class="footer-content">
-                    <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li><li><a>Found</a></li><li><a onclick="openModal('found')">Report Found</a></li></ul></div>
+                    <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li><li><a onclick="goFound()">Found</a></li><li><a onclick="openModal('found')">Report Found</a></li></ul></div>
                     <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Support</a></li><li><a href="#">Terms &amp; Conditions</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
                     <div class="footer-section"><h3>Links</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">About Us</a></li></ul></div>
                     <div class="footer-section"><h3>Contact</h3><p style="color:var(--light);margin-bottom:0.5rem;">Tel: +94 716520690<br>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="53063d3a153c263d3713343e323a3f7d303c3e">[email&#160;protected]</a></p><div class="social-links"><a href="#">🐦</a><a href="#">📘</a><a href="#">📷</a><a href="#">🐙</a></div></div>
@@ -205,6 +205,128 @@
                 </footer>
             </div>
         </div>
+
+        <!-- FOUND CONTENT -->
+        <div id="foundContent" style="display:none;">
+            <div class="lost-page">
+                <div class="lost-hero">
+                    <h1>Found <span>Items</span></h1>
+                    <div class="search-report-row">
+                        <div class="search-box"><i class="fas fa-search"></i><input type="text" id="foundSearchInput" placeholder="Search item name, location…" oninput="filterFoundCards()"></div>
+                        <button class="btn-report-lost" style="background:linear-gradient(135deg,#27ae60,#2ecc71);" onclick="openModal('found')"><i class="fas fa-plus"></i> Report Found</button>
+                    </div>
+                    <div class="filter-row">
+                        <div class="chip active" onclick="setFoundChip(this,'all')">All</div>
+                        <div class="chip" onclick="setFoundChip(this,'electronics')">Electronics</div>
+                        <div class="chip" onclick="setFoundChip(this,'accessories')">Accessories</div>
+                        <div class="chip" onclick="setFoundChip(this,'documents')">Documents</div>
+                        <div class="chip" onclick="setFoundChip(this,'clothing')">Clothing</div>
+                        <div class="chip" onclick="setFoundChip(this,'other')">Other</div>
+                    </div>
+                </div>
+                <div class="lost-main">
+                    <div class="results-meta">
+                        <span id="foundResultsCount">Loading items…</span>
+                        <select class="sort-select" onchange="sortFoundCards(this.value)">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="alpha">A → Z</option>
+                        </select>
+                    </div>
+                    <div class="items-grid" id="foundGrid"></div>
+                    <div class="empty-state" id="foundEmptyState" style="display:none;"><div class="emo">🔍</div><p>No found items match your search.</p></div>
+                </div>
+                <footer class="footer">
+                    <div class="footer-content">
+                        <div class="footer-section"><div class="footer-logo">📦</div><h3>Site</h3><ul><li><a onclick="goLost()">Lost</a></li><li><a onclick="openModal('lost')">Report Lost</a></li><li><a onclick="goFound()">Found</a></li><li><a onclick="openModal('found')">Report Found</a></li></ul></div>
+                        <div class="footer-section"><h3>Help</h3><ul><li><a href="#">Customer Support</a></li><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+                        <div class="footer-section"><h3>Links</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Facebook</a></li></ul></div>
+                        <div class="footer-section"><h3>Contact</h3><p style="color:var(--light);">Tel: +94 716520890<br>Email: talkprojects@wrenix.com</p></div>
+                    </div>
+                    <div class="footer-bottom"><p>© Copyright 2026 Lost and Found. All Right Reserved</p></div>
+                </footer>
+            </div>
+        </div>
+
+        <!-- PROFILE CONTENT -->
+        <div id="profileContent" style="display:none;">
+            <div class="profile-page">
+                <div class="profile-hero-section">
+                    <div class="profile-cover"></div>
+                    <div class="profile-identity">
+                        <div class="profile-avatar-wrap">
+                            <div class="profile-avatar" id="profileAvatar">?</div>
+                        </div>
+                        <div class="profile-info">
+                            <h1 class="profile-name" id="profileDisplayName">—</h1>
+                            <p class="profile-email" id="profileEmail">—</p>
+                            <div class="profile-badges">
+                                <span class="profile-badge badge-member"><i class="fas fa-shield-alt"></i> Member</span>
+                                <span class="profile-badge badge-faculty" id="profileFacultyBadge" style="display:none;"><i class="fas fa-university"></i> <span id="profileFacultyText"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <div class="profile-stats-row">
+                        <div class="profile-stat">
+                            <div class="stat-number" id="statLost">0</div>
+                            <div class="stat-label">Lost Reports</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-number" id="statFound">0</div>
+                            <div class="stat-label">Found Reports</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-number" id="statTotal">0</div>
+                            <div class="stat-label">Total Posts</div>
+                        </div>
+                    </div>
+                    <div class="profile-grid">
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <i class="fas fa-user-circle"></i> Account Details
+                            </div>
+                            <div class="profile-card-body">
+                                <div class="profile-detail-row">
+                                    <span class="detail-label"><i class="fas fa-id-badge"></i> Display Name</span>
+                                    <span class="detail-value" id="detailDisplayName">—</span>
+                                </div>
+                                <div class="profile-detail-row">
+                                    <span class="detail-label"><i class="fas fa-envelope"></i> Email</span>
+                                    <span class="detail-value" id="detailEmail">—</span>
+                                </div>
+                                <div class="profile-detail-row" id="rowStudentId" style="display:none;">
+                                    <span class="detail-label"><i class="fas fa-hashtag"></i> Student / Staff ID</span>
+                                    <span class="detail-value" id="detailStudentId">—</span>
+                                </div>
+                                <div class="profile-detail-row" id="rowFaculty" style="display:none;">
+                                    <span class="detail-label"><i class="fas fa-university"></i> Faculty</span>
+                                    <span class="detail-value" id="detailFaculty">—</span>
+                                </div>
+                                <div class="profile-detail-row" id="rowName" style="display:none;">
+                                    <span class="detail-label"><i class="fas fa-user"></i> Full Name</span>
+                                    <span class="detail-value" id="detailFullName">—</span>
+                                </div>
+                                <div class="profile-detail-row">
+                                    <span class="detail-label"><i class="fas fa-calendar-alt"></i> Member Since</span>
+                                    <span class="detail-value" id="detailJoined">—</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <i class="fas fa-list-alt"></i> My Reports
+                            </div>
+                            <div class="profile-card-body" id="myReportsList">
+                                <div class="profile-loading"><i class="fas fa-spinner fa-spin"></i> Loading your reports…</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- SIGN OUT MODAL -->
@@ -234,7 +356,7 @@
             <p>This will permanently remove the lost item report from the database. This action cannot be undone.</p>
             <div class="del-btn-row">
                 <button class="del-cancel" onclick="closeDeleteModal()">Cancel</button>
-                <button class="del-confirm" id="delConfirmBtn" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i> Delete</button>
+                <button class="del-confirm" id="delConfirmBtn"><i class="fas fa-trash-alt"></i> Delete</button>
             </div>
         </div>
     </div>
